@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">Rekeningrijden</string>
+    <string name="hdRideYearTotal">Jaarrekening</string>
+    <string name="hdRideOverview">Overzicht</string>
+    <string name="hdRideSearch">Zoeken</string>
+    <string name="hdRide">Ritten</string>
+    <string name="tvLoginName">Naam</string>
+    <string name="tvLoginPassword">Wachtwoord</string>
+    <string name="tvRegistrationHeader">Account aanmaken</string>
+    <string name="tvRegistrationName">Naam</string>
+    <string name="tvRegistrationUsername">Gebruikersnaam</string>
+    <string name="tvRegistrationPassword">Wachtwoord</string>
+    <string name="tvRegistrationZipcode">Postcode</string>
+    <string name="tvRegistrationPhonenumber">Telefoonnummer</string>
+    <string name="tvRegistrationHomenumber">Huisnummer</string>
+    <string name="btnRegistrationRegister">Account aanmaken</string>
+    <string name="btnDriverStart">Starten</string>
+    <string name="btnDriverStop">Stoppen</string>
+    <string name="menuOverview">Overzicht</string>
+    <string name="menuLogout">Uitloggen</string>
+    <string name="menuAccount">Account</string>
+    <string name="menuCar">Auto</string>
+    <string name="tvRideOverviewRide">Rit</string>
+    <string name="dash">-</string>
+
+    <string name="tvRideYearTotalPrice">Kosten</string>
+    <string name="tvRideYearTotalDate">Datum</string>
+    <string name="btnCarNew">Nieuw</string>
+    <string name="tvCarColor">Kleur</string>
+    <string name="tvCarBrand">Merk</string>
+    <string name="tvCarNumberplate">Kenteken</string>
+    <string name="tvCarType">Type</string>
+    <string name="btnCarUpdate">Aanpassen</string>
+    <string name="btnLogin">Login</string>
+    <string name="btnLoginRegistration">Registreren</string>
+    <string name="hdChargeDefault">Standaard Heffing</string>
+    <string name="hdChargeTime">Spits Heffing</string>
+    <string name="hdChargeLocation">Locatie Heffing</string>
+</resources>

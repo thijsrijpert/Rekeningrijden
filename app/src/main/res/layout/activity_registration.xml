@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <include layout="@layout/include_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
+        />
+
+    <TextView
+        android:id="@+id/tvRegistrationName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tvRegistrationName"
+        android:layout_marginTop="@dimen/toolbar_text_margin"
+        app:layout_constraintStart_toStartOf="@+id/etRegistrationName"
+        app:layout_constraintTop_toBottomOf="@+id/tbRideRegistration" />
+
+    <EditText
+        android:id="@+id/etRegistrationName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvRegistrationName" />
+
+    <TextView
+        android:id="@+id/tvRegistrationUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tvRegistrationUsername"
+        app:layout_constraintStart_toStartOf="@+id/etRegistrationUsername"
+        app:layout_constraintTop_toBottomOf="@+id/etRegistrationName" />
+
+    <EditText
+        android:id="@+id/etRegistrationUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvRegistrationUsername" />
+
+    <TextView
+        android:id="@+id/tvRegistrationPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tvRegistrationPassword"
+        app:layout_constraintStart_toStartOf="@+id/etRegistrationPassword"
+        app:layout_constraintTop_toBottomOf="@+id/etRegistrationUsername" />
+
+    <EditText
+        android:id="@+id/etRegistrationPassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPassword"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvRegistrationPassword" />
+
+    <TextView
+        android:id="@+id/tvRegistrationZipcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tvRegistrationZipcode"
+        app:layout_constraintStart_toStartOf="@+id/etRegistrationZipcode"
+        app:layout_constraintTop_toBottomOf="@+id/etRegistrationPassword" />
+
+    <EditText
+        android:id="@+id/etRegistrationZipcode"
+        android:layout_width="140dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPostalAddress"
+        app:layout_constraintStart_toStartOf="@+id/etRegistrationPassword"
+        app:layout_constraintTop_toBottomOf="@+id/tvRegistrationZipcode" />
+
+    <TextView
+        android:id="@+id/tvRegistrationPhonenumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tvRegistrationPhonenumber"
+        app:layout_constraintStart_toStartOf="@+id/etRegistrationPhonenumber"
+        app:layout_constraintTop_toBottomOf="@+id/etRegistrationZipcode" />
+
+    <EditText
+        android:id="@+id/etRegistrationPhonenumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="phone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvRegistrationPhonenumber" />
+
+    <TextView
+        android:id="@+id/tvRegistrationHomenumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/tvRegistrationHomenumber"
+        app:layout_constraintStart_toStartOf="@+id/etRegistrationHomeNumber"
+        app:layout_constraintTop_toBottomOf="@+id/etRegistrationPassword" />
+
+    <EditText
+        android:id="@+id/etRegistrationHomeNumber"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="number"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/etRegistrationZipcode"
+        app:layout_constraintTop_toBottomOf="@+id/tvRegistrationHomenumber" />
+
+    <Button
+        android:id="@+id/btnRegistrationRegister"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/btnRegistrationRegister"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/etRegistrationPhonenumber"
+        app:layout_constraintTop_toBottomOf="@+id/etRegistrationPhonenumber" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
