@@ -1,26 +1,49 @@
 package com.thijsrijpert.rekeningrijden.Controller.Database;
 
-import com.thijsrijpert.rekeningrijden.Model.Car;
+import androidx.room.Dao;
+import androidx.room.Insert;
+import androidx.room.Query;
+import androidx.room.Update;
+
 import com.thijsrijpert.rekeningrijden.Model.Ride;
 
-public abstract class RideDao {
+import java.util.List;
+
+/**
+ * The Dao for the ride model object contains all queries for the ride CRUD system.
+ */
+@Dao
+public interface RideDao {
 
 	/**
-	 *
-	 * @param car
+	 *	Query all rides made by a specific car.
+	 * @param numberplate the numberplate of the car. Attribute of the car model object
+	 * @return a list of all rides a car made
 	 */
-	public abstract Ride getAllRidesByCar(Car car);
+	@Query("SELECT * FROM rides WHERE numberplate = :numberplate")
+	List<Ride> getAllRidesByCar(String numberplate);
 
 	/**
-	 *
-	 * @param ride
+	 * Query a specific ride by the primary key
+	 * @param numberplate the numberplate of the car. Attribuate of the car model object
+	 * @param startTime the starttime of the ride. Attribute of the ride model object
+	 * @param date the date that ride took place. Attribute of the ride model object
+	 * @return all details of the ride
 	 */
-	public abstract int insertRide(Ride ride);
+	@Query("SELECT * FROM rides WHERE numberplate = :numberplate AND starttime = :startTime AND date = :date ")
+	Ride getRideByRide(String numberplate, String startTime, String date);
+	/**
+	 * Inserts a collection of rides into the database
+	 * @param ride the ride model object that should be inserted into the database
+	 */
+	@Insert
+	void insertRide(Ride... ride);
 
 	/**
-	 *
-	 * @param ride
+	 * Update a collection of ride in the database
+	 * @param ride the ride model object that should be updated. Based on primary key
 	 */
-	public abstract int updateRide(Ride ride);
+	@Update
+	void updateRide(Ride ride);
 
 }

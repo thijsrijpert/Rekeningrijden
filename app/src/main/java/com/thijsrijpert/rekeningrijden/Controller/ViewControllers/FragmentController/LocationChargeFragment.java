@@ -13,8 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.thijsrijpert.rekeningrijden.Model.LocationCharge;
 import com.thijsrijpert.rekeningrijden.R;
 
-import java.util.Date;
-
 public class LocationChargeFragment extends Fragment {
 
 
@@ -36,7 +34,7 @@ public class LocationChargeFragment extends Fragment {
         Context context = view.getContext();
         RecyclerView recyclerView = (RecyclerView) view;
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        recyclerView.setAdapter(new LocationChargeAdapter(new LocationCharge[]{new LocationCharge(12.23, new Date(), new Date(), 1.000)}));
+        recyclerView.setAdapter(new LocationChargeAdapter(new LocationCharge[]{}));
         return view;
     }
 

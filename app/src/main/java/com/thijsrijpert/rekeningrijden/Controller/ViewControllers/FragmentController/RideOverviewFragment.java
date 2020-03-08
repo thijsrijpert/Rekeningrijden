@@ -10,12 +10,8 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.thijsrijpert.rekeningrijden.Model.Car;
 import com.thijsrijpert.rekeningrijden.Model.Ride;
-import com.thijsrijpert.rekeningrijden.Model.TimeCharge;
 import com.thijsrijpert.rekeningrijden.R;
-
-import java.util.Date;
 
 public class RideOverviewFragment extends Fragment {
 
@@ -41,11 +37,8 @@ public class RideOverviewFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) view;
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-        Ride ride1 = new Ride(new Car(), 2.00, 2.00, new TimeCharge(), new TimeCharge(), new Date(System.currentTimeMillis()));
-        Ride ride2 = new Ride(new Car(), 3.00, 3.00, new TimeCharge(), new TimeCharge(), new Date(System.currentTimeMillis()));
-        Ride ride3 = new Ride(new Car(), 4.00, 4.00, new TimeCharge(), new TimeCharge(), new Date(System.currentTimeMillis()));
 
-        Ride[] rides = new Ride[]{ride1, ride2, ride3};
+        Ride[] rides = new Ride[]{};
         recyclerView.setAdapter(new RideOverviewAdapter(rides));
 
         return view;

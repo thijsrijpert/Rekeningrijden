@@ -38,34 +38,6 @@ public class RideYearTotalFragment extends Fragment {
 
         List<Ride> rides = new ArrayList<Ride>();
 
-        rides.add(new Ride());
-        rides.add(new Ride());
-        rides.add(new Ride());
-        rides.add(new Ride());
-        rides.add(new Ride());
-        rides.add(new Ride());
-        rides.add(new Ride());
-        rides.add(new Ride());
-        rides.add(new Ride());
-        rides.add(new Ride());
-        rides.add(new Ride());
-        rides.add(new Ride());
-        rides.add(new Ride());
-        rides.add(new Ride());
-        rides.add(new Ride());
-        rides.add(new Ride());
-        rides.add(new Ride());
-        rides.add(new Ride());
-        rides.add(new Ride());
-        rides.add(new Ride());
-        rides.add(new Ride());
-        rides.add(new Ride());
-        rides.add(new Ride());
-        rides.add(new Ride());
-        rides.add(new Ride());
-        rides.add(new Ride());
-        rides.add(new Ride());
-
         recyclerView.setAdapter(new RideYearTotalAdapter(rides));
         return view;
     }

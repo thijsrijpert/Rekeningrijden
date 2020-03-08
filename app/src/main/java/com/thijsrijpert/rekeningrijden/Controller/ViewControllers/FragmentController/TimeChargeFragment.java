@@ -2,7 +2,6 @@ package com.thijsrijpert.rekeningrijden.Controller.ViewControllers.FragmentContr
 
 import android.content.Context;
 import android.os.Bundle;
-import android.text.format.Time;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,8 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.thijsrijpert.rekeningrijden.Model.TimeCharge;
 import com.thijsrijpert.rekeningrijden.R;
-
-import java.util.Date;
 
 public class TimeChargeFragment extends Fragment {
 
@@ -37,7 +34,7 @@ public class TimeChargeFragment extends Fragment {
         Context context = view.getContext();
         RecyclerView recyclerView = (RecyclerView) view;
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
-        recyclerView.setAdapter(new TimeChargeAdapter(new TimeCharge[]{new TimeCharge(12.23, new Date(), new Date(), new Time())}));
+        recyclerView.setAdapter(new TimeChargeAdapter(new TimeCharge[]{}));
         return view;
     }
 

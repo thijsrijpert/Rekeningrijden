@@ -18,10 +18,10 @@ public class LoginActivity extends AppCompatActivity {
 		Button btnLogin = findViewById(R.id.btnLogin);
 		Button btnRegistration = findViewById(R.id.btnLoginRegistration);
 
-		btnLogin.setOnClickListener((view) -> {
-			Intent intent = new Intent(getApplicationContext(), ChargeActivity.class);
 
-			startActivity(intent);
+		btnLogin.setOnClickListener((view) -> {
+			//UserViewData controller = new UserViewData();
+			//controller.login(this);
 		});
 
 		btnRegistration.setOnClickListener((view) -> {
@@ -51,5 +51,6 @@ public class LoginActivity extends AppCompatActivity {
 	public void onDestory() {
 		super.onDestroy();
 	}
+
 
 }

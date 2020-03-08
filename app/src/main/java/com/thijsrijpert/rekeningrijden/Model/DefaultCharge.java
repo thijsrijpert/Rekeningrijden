@@ -1,56 +1,80 @@
 package com.thijsrijpert.rekeningrijden.Model;
 
-import java.util.Date;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
+import java.time.LocalDate;
+
+/**
+ * The model object that contains the details of a default charge. Also extended by other charges
+ */
+@Entity(tableName = "DefaultCharges")
 public class DefaultCharge {
-
 	private double price;
-	private Date startdate;
-	private Date enddate;
+	@PrimaryKey @NonNull
+	private LocalDate startdate;
+	@Nullable
+	private LocalDate enddate;
 
-	public DefaultCharge() {
-
-	}
-
-	public DefaultCharge(double price, Date startdate, Date enddate) {
+	/**
+	 * Constructor for the time charge model object. Used by the database to create the database.
+	 * @param price the price of the charge. Used to calculate the total price a user pays
+	 * @param startdate the date this charge becomes valid. Used to calculate the total price a user has to pay.
+	 * @param enddate the date this charge is no longer valid.  Used to calculate the total price a user has to pay.
+	 */
+	public DefaultCharge(double price, @NonNull LocalDate startdate, @Nullable LocalDate enddate) {
 		this.price = price;
 		this.startdate = startdate;
 		this.enddate = enddate;
 	}
 
+	/**
+	 * Get the price that is paid for this charge
+	 * @return the price of the charge. Used to calculate the total price a user pays
+	 */
 	public double getPrice() {
 		return this.price;
 	}
 
 	/**
-	 *
-	 * @param price
+	 * Set a new price for this charge
+	 * @param price the price of the charge. Used to calculate the total price a user pays
 	 */
 	public void setPrice(double price) {
 		this.price = price;
 	}
 
-	public Date getStartdate() {
+	/**
+	 * Get the startdate of this charge
+	 * @return the date this charge becomes valid. Used to calculate the total price a user has to pay.
+	 */
+	public LocalDate getStartdate() {
 		return this.startdate;
 	}
 
 	/**
-	 *
-	 * @param startdate
+	 * Set a new startdate for this charge
+	 * @param startdate the date this charge becomes valid. Used to calculate the total price a user has to pay.
 	 */
-	public void setStartdate(Date startdate) {
+	public void setStartdate(LocalDate startdate) {
 		this.startdate = startdate;
 	}
 
-	public Date getEnddate() {
+	/**
+	 * Get the enddate of this charge
+	 * @return the date this charge is no longer valid.  Used to calculate the total price a user has to pay.
+	 */
+	public LocalDate getEnddate() {
 		return this.enddate;
 	}
 
 	/**
-	 *
-	 * @param enddate
+	 * Set a new enddate for this charge
+	 * @param enddate the date this charge is no longer valid.  Used to calculate the total price a user has to pay.
 	 */
-	public void setEnddate(Date enddate) {
+	public void setEnddate(LocalDate enddate) {
 		this.enddate = enddate;
 	}
 

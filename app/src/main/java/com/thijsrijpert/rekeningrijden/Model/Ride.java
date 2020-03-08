@@ -1,23 +1,38 @@
 package com.thijsrijpert.rekeningrijden.Model;
 
-import android.text.format.Time;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.room.Entity;
 
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
+/**
+ * Contains the model object for a ride.
+ */
+@Entity(primaryKeys = {"numberplate", "starttime", "date"}, tableName = "Rides")
 public class Ride {
-
-	private Car numberplate;
-	private double startlocation;
+	@NonNull
+	private final Car numberplate;
+	private final double startlocation;
 	private double stoplocation;
-	private TimeCharge starttime;
-	private TimeCharge stoptime;
-	private Date date;
+	@NonNull
+	private final LocalTime starttime;
+	@Nullable
+	private LocalTime stoptime;
+	@NonNull
+	private final LocalDate date;
 
-	public Ride() {
-
-	}
-
-	public Ride(Car numberplate, double startlocation, double stoplocation, TimeCharge starttime, TimeCharge stoptime, Date date) {
+	/**
+	 * Constructor for the ride model object. Used by the database to create the tables
+	 * @param numberplate instance of car. Contains all info about the car that made the ride
+	 * @param startlocation startlocation of the ride. Contains the coordinates at which the ride started
+	 * @param stoplocation stoplocation of the ride. Contains the coordinates at which the ride stopped
+	 * @param starttime starttime of the ride. Contains the time at which the ride started
+	 * @param stoptime stoptime of the ride. Contains the time the ride stopped
+	 * @param date date of the ride. Contains the date the ride took place
+	 */
+	public Ride(@NonNull Car numberplate, double startlocation, double stoplocation, @NonNull LocalTime starttime, @Nullable LocalTime stoptime, @NonNull LocalDate date) {
 		this.numberplate = numberplate;
 		this.startlocation = startlocation;
 		this.stoplocation = stoplocation;
@@ -26,78 +41,66 @@ public class Ride {
 		this.date = date;
 	}
 
+	/**
+	 * Get the car of the ride
+	 * @return instance of car. Contains all info about the car that made the ride
+	 */
 	public Car getNumberplate() { return this.numberplate;}
 
 	/**
-	 *
-	 * @param numberplate
+	 * Get the locations of the start of the ride
+	 * @return startlocation of the ride. Contains the coordinates at which the ride started
 	 */
-	public void setNumberplate(Car numberplate) {
-
-	}
-
 	public double getStartlocation() {
 		return this.startlocation;
 	}
 
 	/**
-	 *
-	 * @param startlocation
+	 * Get the stoplocation of the ride
+	 * @return stoplocation of the ride. Contains the coordinates at which the ride stopped
 	 */
-	public void setStartlocation(double startlocation) {
-		this.startlocation = startlocation;
-	}
-
 	public double getStoplocation() {
 		return this.stoplocation;
 	}
 
 	/**
-	 *
-	 * @param stoplocation
+	 * Set a new stoplocation for the ride
+	 * @param stoplocation stoplocation of the ride. Contains the coordinates at which the ride stopped
 	 */
 	public void setStoplocation(double stoplocation) {
 		this.stoplocation = stoplocation;
 	}
 
-	public Time getStarttime() {
-		// TODO - implement Ride.getStarttime
-		throw new UnsupportedOperationException();
+	/**
+	 * Get the starttime of the ride
+	 * @return starttime of the ride. Contains the time at which the ride started
+	 */
+	public LocalTime getStarttime() {
+		return starttime;
 	}
 
 	/**
-	 *
-	 * @param starttime
+	 * Get the stoptime of the ride
+	 * @return stoptime of the ride. Contains the time the ride stopped
 	 */
-	public void setStarttime(Time starttime) {
-		// TODO - implement Ride.setStarttime
-		throw new UnsupportedOperationException();
-	}
-
-	public Time getStoptime() {
-		// TODO - implement Ride.getStoptime
-		throw new UnsupportedOperationException();
+	public LocalTime getStoptime() {
+		return stoptime;
 	}
 
 	/**
-	 *
-	 * @param stoptime
+	 * Set a new stoptime for this ride
+	 * @param stoptime stoptime of the ride. Contains the time the ride stopped
 	 */
-	public void setStoptime(Time stoptime) {
-		// TODO - implement Ride.setStoptime
-		throw new UnsupportedOperationException();
+	public void setStoptime(LocalTime stoptime) {
+		this.stoptime = stoptime;
 	}
 
-	public Date getDate() {
+	/**
+	 * Get the date of this ride
+	 * @return date of the ride. Contains the date the ride took place
+	 */
+	public LocalDate getDate() {
 		return this.date;
-	}
-
-	/**
-	 *
-	 * @param date
-	 */
-	public void setDate(Date date) {
-		this.date = date;
 	}
 
 }
