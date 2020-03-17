@@ -5,13 +5,11 @@ import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
-import java.io.Serializable;
-
 /**
  * Model Object that contains all user data
  */
 @Entity(tableName = "Users")
-public class User implements Serializable {
+public class User {
 	@PrimaryKey @NonNull
 	private final String username;
 	private String zipcode;

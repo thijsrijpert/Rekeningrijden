@@ -3,30 +3,34 @@ package com.thijsrijpert.rekeningrijden.Controller.ViewControllers.ActivityContr
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.EditText;
 
-import androidx.appcompat.app.AppCompatActivity;
-
+import com.thijsrijpert.rekeningrijden.Controller.PreferencesManager;
+import com.thijsrijpert.rekeningrijden.Controller.ViewData.UserViewData;
 import com.thijsrijpert.rekeningrijden.R;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends SuperActivity {
+
+	private EditText etUsername, etPassword;
+	private Button btnLogin,  btnRegistration;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
 		this.setContentView(R.layout.activity_login);
 
-		Button btnLogin = findViewById(R.id.btnLogin);
-		Button btnRegistration = findViewById(R.id.btnLoginRegistration);
-
+		btnLogin = findViewById(R.id.btnLogin);
+		btnRegistration = findViewById(R.id.btnLoginRegistration);
+		etUsername = findViewById(R.id.etName);
+		etPassword = findViewById(R.id.etPassword);
 
 		btnLogin.setOnClickListener((view) -> {
-			//UserViewData controller = new UserViewData();
-			//controller.login(this);
+			UserViewData controller = new UserViewData();
+			controller.login(this);
 		});
 
 		btnRegistration.setOnClickListener((view) -> {
 			Intent intent = new Intent(getApplicationContext(), RegistrationActivity.class);
-
 			startActivity(intent);
 		});
 
@@ -34,6 +38,11 @@ public class LoginActivity extends AppCompatActivity {
 
 	public void onStart() {
 		super.onStart();
+
+		if(PreferencesManager.getInstance(this).userPrefExists()){
+			Intent intent = new Intent(getApplicationContext(), RideRegistrationActivity.class);
+			startActivity(intent);
+		}
 	}
 
 	public void onResume() {
@@ -52,5 +61,19 @@ public class LoginActivity extends AppCompatActivity {
 		super.onDestroy();
 	}
 
+	public EditText getEtUsername() {
+		return etUsername;
+	}
 
+	public EditText getEtPassword() {
+		return etPassword;
+	}
+
+	public Button getBtnLogin() {
+		return btnLogin;
+	}
+
+	public Button getBtnRegistration() {
+		return btnRegistration;
+	}
 }

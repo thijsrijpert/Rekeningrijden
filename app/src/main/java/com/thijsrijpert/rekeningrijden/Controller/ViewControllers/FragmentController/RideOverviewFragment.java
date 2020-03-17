@@ -13,8 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.thijsrijpert.rekeningrijden.Model.Ride;
 import com.thijsrijpert.rekeningrijden.R;
 
+import java.util.ArrayList;
+
 public class RideOverviewFragment extends Fragment {
 
+    private RecyclerView recyclerView;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -34,13 +37,16 @@ public class RideOverviewFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_ride_list, parent, false);
 
         Context context = view.getContext();
-        RecyclerView recyclerView = (RecyclerView) view;
+        recyclerView = (RecyclerView) view;
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-
-        Ride[] rides = new Ride[]{};
+        ArrayList<Ride> rides = new ArrayList<>();
         recyclerView.setAdapter(new RideOverviewAdapter(rides));
 
         return view;
+    }
+
+    public RecyclerView getRecyclerView() {
+        return recyclerView;
     }
 }

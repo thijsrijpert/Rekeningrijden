@@ -12,7 +12,8 @@ import java.time.LocalDate;
  */
 @Entity(tableName = "DefaultCharges")
 public class DefaultCharge {
-	private double price;
+	@NonNull
+	private Double price;
 	@PrimaryKey @NonNull
 	private LocalDate startdate;
 	@Nullable
@@ -24,7 +25,7 @@ public class DefaultCharge {
 	 * @param startdate the date this charge becomes valid. Used to calculate the total price a user has to pay.
 	 * @param enddate the date this charge is no longer valid.  Used to calculate the total price a user has to pay.
 	 */
-	public DefaultCharge(double price, @NonNull LocalDate startdate, @Nullable LocalDate enddate) {
+	public DefaultCharge(@NonNull Double price, @NonNull LocalDate startdate, @Nullable LocalDate enddate) {
 		this.price = price;
 		this.startdate = startdate;
 		this.enddate = enddate;
@@ -34,7 +35,7 @@ public class DefaultCharge {
 	 * Get the price that is paid for this charge
 	 * @return the price of the charge. Used to calculate the total price a user pays
 	 */
-	public double getPrice() {
+	public Double getPrice() {
 		return this.price;
 	}
 
@@ -42,7 +43,7 @@ public class DefaultCharge {
 	 * Set a new price for this charge
 	 * @param price the price of the charge. Used to calculate the total price a user pays
 	 */
-	public void setPrice(double price) {
+	public void setPrice(Double price) {
 		this.price = price;
 	}
 

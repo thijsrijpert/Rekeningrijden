@@ -6,9 +6,12 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.tabs.TabLayout;
 import com.thijsrijpert.rekeningrijden.Controller.ViewControllers.FragmentController.RidePagerAdapter;
+import com.thijsrijpert.rekeningrijden.Controller.ViewData.RideViewData;
 import com.thijsrijpert.rekeningrijden.R;
 
 public class RideOverviewActivity extends OverviewActivity{
+
+	private RidePagerAdapter ridePagerAdapter;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -19,14 +22,17 @@ public class RideOverviewActivity extends OverviewActivity{
 
 		ViewPager pager = findViewById(R.id.vpRideOverview);
 		TabLayout tabLayout = findViewById(R.id.tabsRide);
-		RidePagerAdapter adapter = new RidePagerAdapter(getSupportFragmentManager(), this.getBaseContext());
+		ridePagerAdapter = new RidePagerAdapter(getSupportFragmentManager(), this.getBaseContext());
 
-		super.activateViewPager(pager, tabLayout, adapter);
+		super.activateViewPager(pager, tabLayout, ridePagerAdapter);
 
 	}
 
 	public void onStart() {
 		super.onStart();
+
+		RideViewData rideViewData = new RideViewData();
+		rideViewData.loadAllRides(this);
 	}
 
 	public void onResume() {
@@ -45,4 +51,7 @@ public class RideOverviewActivity extends OverviewActivity{
 		super.onDestroy();
 	}
 
+	public RidePagerAdapter getRidePagerAdapter() {
+		return ridePagerAdapter;
+	}
 }

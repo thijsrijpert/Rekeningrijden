@@ -3,6 +3,7 @@ package com.thijsrijpert.rekeningrijden.Model;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.room.Entity;
+import androidx.room.Ignore;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -14,8 +15,10 @@ import java.time.LocalTime;
 public class Ride {
 	@NonNull
 	private final Car numberplate;
-	private final double startlocation;
-	private double stoplocation;
+	@NonNull
+	private final String startlocation;
+	@Nullable
+	private String stoplocation;
 	@NonNull
 	private final LocalTime starttime;
 	@Nullable
@@ -27,12 +30,27 @@ public class Ride {
 	 * Constructor for the ride model object. Used by the database to create the tables
 	 * @param numberplate instance of car. Contains all info about the car that made the ride
 	 * @param startlocation startlocation of the ride. Contains the coordinates at which the ride started
+	 * @param starttime starttime of the ride. Contains the time at which the ride started
+	 * @param date date of the ride. Contains the date the ride took place
+	 */
+	@Ignore
+	public Ride(@NonNull Car numberplate, @NonNull String startlocation, @NonNull LocalTime starttime, @NonNull LocalDate date) {
+		this.numberplate = numberplate;
+		this.startlocation = startlocation;
+		this.starttime = starttime;
+		this.date = date;
+	}
+
+	/**
+	 * Constructor for the ride model object. Used by the database to create the tables
+	 * @param numberplate instance of car. Contains all info about the car that made the ride
+	 * @param startlocation startlocation of the ride. Contains the coordinates at which the ride started
 	 * @param stoplocation stoplocation of the ride. Contains the coordinates at which the ride stopped
 	 * @param starttime starttime of the ride. Contains the time at which the ride started
 	 * @param stoptime stoptime of the ride. Contains the time the ride stopped
 	 * @param date date of the ride. Contains the date the ride took place
 	 */
-	public Ride(@NonNull Car numberplate, double startlocation, double stoplocation, @NonNull LocalTime starttime, @Nullable LocalTime stoptime, @NonNull LocalDate date) {
+	public Ride(@NonNull Car numberplate, @NonNull String startlocation, @Nullable  String stoplocation, @NonNull LocalTime starttime, @Nullable LocalTime stoptime, @NonNull LocalDate date) {
 		this.numberplate = numberplate;
 		this.startlocation = startlocation;
 		this.stoplocation = stoplocation;
@@ -51,7 +69,7 @@ public class Ride {
 	 * Get the locations of the start of the ride
 	 * @return startlocation of the ride. Contains the coordinates at which the ride started
 	 */
-	public double getStartlocation() {
+	public String getStartlocation() {
 		return this.startlocation;
 	}
 
@@ -59,7 +77,7 @@ public class Ride {
 	 * Get the stoplocation of the ride
 	 * @return stoplocation of the ride. Contains the coordinates at which the ride stopped
 	 */
-	public double getStoplocation() {
+	public String getStoplocation() {
 		return this.stoplocation;
 	}
 
@@ -67,7 +85,7 @@ public class Ride {
 	 * Set a new stoplocation for the ride
 	 * @param stoplocation stoplocation of the ride. Contains the coordinates at which the ride stopped
 	 */
-	public void setStoplocation(double stoplocation) {
+	public void setStoplocation(String stoplocation) {
 		this.stoplocation = stoplocation;
 	}
 

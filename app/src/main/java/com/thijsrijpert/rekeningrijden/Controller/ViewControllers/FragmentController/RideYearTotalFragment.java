@@ -18,6 +18,8 @@ import java.util.List;
 
 public class RideYearTotalFragment extends Fragment {
 
+    private RecyclerView recyclerView;
+
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
@@ -31,14 +33,17 @@ public class RideYearTotalFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_ride_year_total_list, container, false);
-        RecyclerView recyclerView = view.findViewById(R.id.listRideYearTotal);
+        recyclerView = view.findViewById(R.id.listRideYearTotal);
 
         Context context = view.getContext();
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-        List<Ride> rides = new ArrayList<Ride>();
-
+        List<Ride> rides = new ArrayList<>();
         recyclerView.setAdapter(new RideYearTotalAdapter(rides));
         return view;
+    }
+
+    public RecyclerView getRecyclerView() {
+        return recyclerView;
     }
 }

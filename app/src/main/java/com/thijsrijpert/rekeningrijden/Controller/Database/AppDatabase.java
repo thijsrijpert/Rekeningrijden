@@ -15,7 +15,7 @@ import com.thijsrijpert.rekeningrijden.Model.Ride;
 import com.thijsrijpert.rekeningrijden.Model.Role;
 import com.thijsrijpert.rekeningrijden.Model.User;
 
-@Database(entities = {User.class, Car.class, DefaultCharge.class, LocationCharge.class, Ride.class, Role.class}, version = 1, exportSchema = false)
+@Database(entities = {User.class, Car.class, DefaultCharge.class, LocationCharge.class, Ride.class, Role.class}, version = 3, exportSchema = false)
 @TypeConverters({Converters.class})
 public abstract class AppDatabase extends RoomDatabase {
 
@@ -25,7 +25,7 @@ public abstract class AppDatabase extends RoomDatabase {
         if(instance == null){
             instance =
                     Room.databaseBuilder(context,
-                    AppDatabase.class, "Database").build();
+                    AppDatabase.class, "Database").fallbackToDestructiveMigration().build();
         }
         return instance;
     }
@@ -33,6 +33,7 @@ public abstract class AppDatabase extends RoomDatabase {
     public static void destroyInstance(){
         instance = null;
     }
+
 
     public abstract UserDao userDao();
     public abstract CarDao carDao();

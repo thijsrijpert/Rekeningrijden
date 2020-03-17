@@ -110,4 +110,8 @@ public class Car {
 	 */
 	public void setUsername(User username) { this.username = username;}
 
+	@Override @NonNull
+	public String toString() {
+		return numberplate;
+	}
 }

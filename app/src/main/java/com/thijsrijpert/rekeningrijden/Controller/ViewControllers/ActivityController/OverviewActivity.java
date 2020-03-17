@@ -15,7 +15,6 @@ public class OverviewActivity extends SuperActivity {
 
 	public void onStart() {
 		super.onStart();
-
 	}
 
 	public void onResume() {

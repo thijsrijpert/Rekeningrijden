@@ -1,5 +1,7 @@
 package com.thijsrijpert.rekeningrijden.Controller.ViewControllers.FragmentController;
 
+import android.location.Address;
+import android.location.Geocoder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,12 +13,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.thijsrijpert.rekeningrijden.Model.Ride;
 import com.thijsrijpert.rekeningrijden.R;
 
-import java.util.Locale;
+import java.io.IOException;
+import java.util.List;
 
 public class RideOverviewAdapter extends RecyclerView.Adapter<RideOverviewAdapter.RideViewHolder> {
-    private Ride[] rides;
+    private List<Ride> rides;
 
-    public RideOverviewAdapter(Ride[] rides){ this.rides = rides; }
+    public RideOverviewAdapter(List<Ride> rides){
+        this.rides = rides;
+    }
 
     @NonNull
     @Override
@@ -28,11 +33,11 @@ public class RideOverviewAdapter extends RecyclerView.Adapter<RideOverviewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull RideViewHolder holder, int position) {
-        holder.bind(rides[position]);
+        holder.bind(rides.get(position));
     }
 
     @Override
-    public int getItemCount() { return rides.length; }
+    public int getItemCount() { return rides.size(); }
 
     class RideViewHolder extends RecyclerView.ViewHolder{
 
@@ -50,12 +55,24 @@ public class RideOverviewAdapter extends RecyclerView.Adapter<RideOverviewAdapte
         }
 
         void bind(Ride ride){
-            startLocation.setText(String.format(Locale.getDefault(),"%f",ride.getStartlocation()));
-            stopLocation.setText(String.format(Locale.getDefault(), "%f", ride.getStoplocation()));
-            date.setText(ride.getDate().toString());
-            price.setText("2");
-
+            if(ride.getStoplocation() != null){
+                startLocation.setText(getLocationName(ride.getStartlocation()));
+                stopLocation.setText(getLocationName(ride.getStoplocation()));
+                date.setText(ride.getDate().toString());
+                price.setText("2");
+            }
         }
 
+        private String getLocationName(@NonNull String coordinate){
+            Geocoder geocoder = new Geocoder(itemView.getContext());
+            try {
+                String[] coordinates = coordinate.split(itemView.getContext().getString(R.string.coordinateSplitCharacter), 2);
+                List<Address> list = geocoder.getFromLocation(Double.parseDouble(coordinates[0]), Double.parseDouble(coordinates[1]), 1);
+                return list.get(0).getLocality();
+            } catch (IOException e) {
+                e.printStackTrace();
+                return null;
+            }
+        }
     }
 }

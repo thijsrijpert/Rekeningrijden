@@ -22,7 +22,7 @@ public class TimeCharge extends DefaultCharge {
 	 * @param enddate the date this charge is no longer valid.  Used to calculate the total price a user has to pay.
 	 * @param time the time this charge applies to. Used to calculate the total price a user has to pay.
 	 */
-	public TimeCharge(double price, @NonNull LocalDate startdate, @Nullable LocalDate enddate, @NonNull LocalTime time) {
+	public TimeCharge(@NonNull Double price, @NonNull LocalDate startdate, @Nullable LocalDate enddate, @NonNull LocalTime time) {
 		super(price, startdate, enddate);
 		this.time = time;
 	}

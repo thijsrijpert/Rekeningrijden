@@ -18,20 +18,36 @@ public class Converters {
     }
 
     @TypeConverter
-    public static LocalTime longToTime(long time) {
-        return LocalTime.ofSecondOfDay(time);
+    public static LocalTime intToTime(Integer time) {
+        if(time != null){
+            return LocalTime.ofSecondOfDay(time);
+        }
+        return null;
     }
 
     @TypeConverter
-    public static int timeToLong(LocalTime time) {
-        return time.toSecondOfDay();
+    public static Integer timeToInt(LocalTime time) {
+        if(time != null){
+            return time.toSecondOfDay();
+        }
+        return null;
     }
 
     @TypeConverter
-    public static LocalDate longToDate(long date){ return LocalDate.ofEpochDay(date);}
+    public static LocalDate longToDate(Long date){
+        if(date != null){
+            return LocalDate.ofEpochDay(date);
+        }
+        return null;
+    }
 
     @TypeConverter
-    public static long dateToLong(LocalDate date){ return date.toEpochDay();}
+    public static Long dateToLong(LocalDate date){
+        if(date != null){
+            return date.toEpochDay();
+        }
+        return null;
+    }
 
     @TypeConverter
     public static User usernameToUser(String username){ return new User(username);}

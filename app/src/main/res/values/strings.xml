@@ -13,7 +13,7 @@
     <string name="tvRegistrationZipcode">Postcode</string>
     <string name="tvRegistrationPhonenumber">Telefoonnummer</string>
     <string name="tvRegistrationHomenumber">Huisnummer</string>
-    <string name="btnRegistrationRegister">Account aanmaken</string>
+    <string name="btnRegistrationRegister">Bevestigen</string>
     <string name="btnDriverStart">Starten</string>
     <string name="btnDriverStop">Stoppen</string>
     <string name="menuOverview">Overzicht</string>
@@ -30,10 +30,17 @@
     <string name="tvCarBrand">Merk</string>
     <string name="tvCarNumberplate">Kenteken</string>
     <string name="tvCarType">Type</string>
-    <string name="btnCarUpdate">Aanpassen</string>
+    <string name="btnCarUpdate">Bevestigen</string>
     <string name="btnLogin">Login</string>
     <string name="btnLoginRegistration">Registreren</string>
     <string name="hdChargeDefault">Standaard Heffing</string>
     <string name="hdChargeTime">Spits Heffing</string>
     <string name="hdChargeLocation">Locatie Heffing</string>
+    <string name="tvSearchDate">Datum</string>
+    <string name="tvSearchMinPrice">Minimale prijs</string>
+    <string name="tvSearchMaxPrice">Maximale prijs</string>
+    <string name="tvSearchStartLocation">Vertrekpunt</string>
+    <string name="tvSearchStopLocation">Eindpunt</string>
+    <string name="btnSearch">Zoeken</string>
+    <string name="coordinateSplitCharacter">;</string>
 </resources>

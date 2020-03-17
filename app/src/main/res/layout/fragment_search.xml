@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Controller.ViewControllers.FragmentController.RideSearchFragment">
+
+
+    <TextView
+        android:id="@+id/tvSearchDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="@string/tvSearchDate"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/etSearchDate" />
+
+    <TextView
+        android:id="@+id/tvSearchMinPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="@string/tvSearchMinPrice"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/etSearchMinPrice" />
+
+    <TextView
+        android:id="@+id/tvSearchMaxPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="@string/tvSearchMaxPrice"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/etSearchMaxPrice" />
+
+    <TextView
+        android:id="@+id/tvSearchStartLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="@string/tvSearchStartLocation"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/spSearchStartLocation" />
+
+    <TextView
+        android:id="@+id/tvSearchStopLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:text="@string/tvSearchStopLocation"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="@id/spSearchStopLocation" />
+
+    <Button
+        android:id="@+id/btnSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/btnSearch"
+        app:layout_constraintEnd_toEndOf="@+id/spSearchStopLocation"
+        app:layout_constraintTop_toBottomOf="@+id/spSearchStopLocation" />
+
+    <EditText
+        android:id="@+id/etSearchDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:autofillHints=""
+        android:ems="10"
+        android:inputType="date"
+        app:layout_constraintHorizontal_bias="0.62"
+        app:layout_constraintLeft_toRightOf="@id/tvSearchDate"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etSearchMinPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:autofillHints=""
+        app:layout_constraintLeft_toRightOf="@id/tvSearchMinPrice"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etSearchDate" />
+
+    <EditText
+        android:id="@+id/etSearchMaxPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:autofillHints=""
+        app:layout_constraintLeft_toRightOf="@id/tvSearchMaxPrice"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etSearchMinPrice" />
+
+    <Spinner
+        android:id="@+id/spSearchStartLocation"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintLeft_toRightOf="@id/tvSearchStartLocation"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etSearchMaxPrice" />
+
+    <Spinner
+        android:id="@+id/spSearchStopLocation"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:layout_constraintLeft_toRightOf="@id/tvSearchStopLocation"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spSearchStartLocation" />
+</androidx.constraintlayout.widget.ConstraintLayout>

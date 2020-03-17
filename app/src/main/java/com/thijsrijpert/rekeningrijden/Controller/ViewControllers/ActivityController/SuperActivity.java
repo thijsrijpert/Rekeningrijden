@@ -9,6 +9,7 @@ import android.view.MenuItem;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
+import com.thijsrijpert.rekeningrijden.Controller.PreferencesManager;
 import com.thijsrijpert.rekeningrijden.R;
 
 public class SuperActivity extends AppCompatActivity {
@@ -41,8 +42,12 @@ public class SuperActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.tbRideRegistration);
         setSupportActionBar(toolbar);
 
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        if(getSupportActionBar() != null){
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+        }else{
+            System.out.println("Actionbar problem");
+        }
     }
 
     @Override
@@ -63,6 +68,8 @@ public class SuperActivity extends AppCompatActivity {
                 intent = new Intent(getApplicationContext(), RideOverviewActivity.class);
                 break;
             case R.id.menuLogout:
+                PreferencesManager.getInstance(this).removePref("User");
+                PreferencesManager.getInstance(this).removePref("Ride");
                 intent = new Intent(getApplicationContext(), LoginActivity.class);
                 break;
             case R.id.menuCar:
@@ -72,6 +79,12 @@ public class SuperActivity extends AppCompatActivity {
                 return super.onOptionsItemSelected(item);
         }
         startActivity(intent);
+        return true;
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        onBackPressed();
         return true;
     }
 }

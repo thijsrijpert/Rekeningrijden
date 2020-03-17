@@ -16,12 +16,12 @@ import java.util.List;
 public interface RideDao {
 
 	/**
-	 *	Query all rides made by a specific car.
-	 * @param numberplate the numberplate of the car. Attribute of the car model object
+	 *	Query all rides made by a specific user
+	 * @param username the username of a person. Select all rides this person made
 	 * @return a list of all rides a car made
 	 */
-	@Query("SELECT * FROM rides WHERE numberplate = :numberplate")
-	List<Ride> getAllRidesByCar(String numberplate);
+	@Query("SELECT numberplate, startlocation, stoplocation, starttime, stoptime, date FROM rides JOIN Cars USING (numberplate) WHERE username = :username")
+	List<Ride> getAllRidesByUser(String username);
 
 	/**
 	 * Query a specific ride by the primary key
