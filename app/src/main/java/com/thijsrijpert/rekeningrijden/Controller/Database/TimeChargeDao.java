@@ -1,9 +1,7 @@
 package com.thijsrijpert.rekeningrijden.Controller.Database;
 
 import androidx.room.Dao;
-import androidx.room.Insert;
 import androidx.room.Query;
-import androidx.room.Update;
 
 import com.thijsrijpert.rekeningrijden.Model.TimeCharge;
 
@@ -15,7 +13,7 @@ import java.util.List;
  * The Dao for the time charge model object contains all queries for the time charge CRUD system.
  */
 @Dao
-public interface TimeChargeDao {
+public interface TimeChargeDao extends BaseDao<TimeCharge>{
 
 	/**
 	 * Query all objects from the time charge table.
@@ -39,19 +37,5 @@ public interface TimeChargeDao {
 	 */
 	@Query("SELECT * FROM TimeCharges WHERE time = :time AND enddate IS NOT NULL")
 	TimeCharge getCurrentTimeCharge(LocalTime time);
-
-	/**
-	 * Insert a collection of time charge model objects
-	 * @param charge the time charge model objects that contain the data.
-	 */
-	@Insert
-	void insertTimeCharge(TimeCharge... charge);
-
-	/**
-	 * Update a collection of thime charge model objects.
-	 * @param charge the time charge model objects that should be updated. Cannot change the primary key
-	 */
-	@Update
-	void updateTimeCharge(TimeCharge... charge);
 
 }

@@ -1,9 +1,7 @@
 package com.thijsrijpert.rekeningrijden.Controller.Database;
 
 import androidx.room.Dao;
-import androidx.room.Insert;
 import androidx.room.Query;
-import androidx.room.Update;
 
 import com.thijsrijpert.rekeningrijden.Model.Ride;
 
@@ -13,7 +11,7 @@ import java.util.List;
  * The Dao for the ride model object contains all queries for the ride CRUD system.
  */
 @Dao
-public interface RideDao {
+public interface RideDao extends BaseDao<Ride>{
 
 	/**
 	 *	Query all rides made by a specific user
@@ -32,18 +30,5 @@ public interface RideDao {
 	 */
 	@Query("SELECT * FROM rides WHERE numberplate = :numberplate AND starttime = :startTime AND date = :date ")
 	Ride getRideByRide(String numberplate, String startTime, String date);
-	/**
-	 * Inserts a collection of rides into the database
-	 * @param ride the ride model object that should be inserted into the database
-	 */
-	@Insert
-	void insertRide(Ride... ride);
-
-	/**
-	 * Update a collection of ride in the database
-	 * @param ride the ride model object that should be updated. Based on primary key
-	 */
-	@Update
-	void updateRide(Ride ride);
 
 }

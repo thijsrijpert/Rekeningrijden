@@ -1,9 +1,7 @@
 package com.thijsrijpert.rekeningrijden.Controller.Database;
 
 import androidx.room.Dao;
-import androidx.room.Insert;
 import androidx.room.Query;
-import androidx.room.Update;
 
 import com.thijsrijpert.rekeningrijden.Model.LocationCharge;
 
@@ -14,7 +12,7 @@ import java.util.List;
  * The Dao for the location charge model object contains all queries for the location charge CRUD system.
  */
 @Dao
-public interface LocationChargeDao {
+public interface LocationChargeDao extends BaseDao<LocationCharge>{
 
 	/**
 	 * Query all location charge present in the database
@@ -47,19 +45,5 @@ public interface LocationChargeDao {
 	 */
 	@Query("SELECT * FROM LocationCharges WHERe location = :location AND enddate IS NOT NULL")
 	LocationCharge getCurrentLocationCharge(double location);
-
-	/**
-	 * Insert a collection of location charge model objects into the database
-	 * @param charge the location charge model object that should be inserted.
-	 */
-	@Insert
-	void insertLocationCharge(LocationCharge... charge);
-
-	/**
-	 * Update a collection of location charge model objects
-	 * @param charge the location charge that should be updated. Primary Key cannot be updated.
-	 */
-	@Update
-	void updateLocationCharge(LocationCharge... charge);
 
 }

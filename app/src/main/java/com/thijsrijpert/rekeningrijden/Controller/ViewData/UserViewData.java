@@ -86,9 +86,9 @@ public class UserViewData extends SuperViewData {
         protected Void doInBackground(Void... params) {
             UserDao userDao = AppDatabase.getInstance(weakActivity.get().getApplicationContext()).userDao();
             if(PreferencesManager.getInstance(weakActivity.get()).userPrefExists()){
-                userDao.updateUser(user);
+                userDao.update(user);
             }else{
-                userDao.insertUser(user);
+                userDao.insert(user);
             }
             return null;
         }

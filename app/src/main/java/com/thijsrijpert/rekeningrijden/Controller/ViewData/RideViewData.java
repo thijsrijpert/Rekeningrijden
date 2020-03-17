@@ -171,7 +171,7 @@ public class RideViewData extends SuperViewData{
 
         @Override
         protected Void doInBackground(Void... params) {
-            AppDatabase.getInstance(weakActivity.get()).rideDao().insertRide(ride);
+            AppDatabase.getInstance(weakActivity.get()).rideDao().insert(ride);
             return null;
         }
 
@@ -202,7 +202,7 @@ public class RideViewData extends SuperViewData{
 
         @Override
         protected Void doInBackground(Void... params) {
-            AppDatabase.getInstance(weakActivity.get()).rideDao().updateRide(ride);
+            AppDatabase.getInstance(weakActivity.get()).rideDao().update(ride);
             return null;
         }
 

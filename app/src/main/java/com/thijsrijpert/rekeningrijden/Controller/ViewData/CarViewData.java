@@ -39,7 +39,7 @@ public class CarViewData extends SuperViewData{
         updateCarTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    public Car getCarObject(){
+    private Car getCarObject(){
         String numberplate = ((EditText)activity.findViewById(R.id.etCarNumberplate)).getText().toString();
         String brand = ((Spinner)activity.findViewById(R.id.spCarBrand)).getSelectedItem().toString();
         //String color = ((EditText)activity.findViewById(R.id.etCarNumberplate)).getText().toString();
@@ -72,7 +72,7 @@ public class CarViewData extends SuperViewData{
 
         @Override
         protected Void doInBackground(Void... params) {
-            AppDatabase.getInstance(weakActivity.get().getApplicationContext()).carDao().updateCar(car);
+            AppDatabase.getInstance(weakActivity.get().getApplicationContext()).carDao().update(car);
             return null;
         }
 
@@ -98,7 +98,7 @@ public class CarViewData extends SuperViewData{
 
         @Override
         protected Void doInBackground(Void... params) {
-            AppDatabase.getInstance(weakActivity.get().getApplicationContext()).carDao().insertCar(car);
+            AppDatabase.getInstance(weakActivity.get().getApplicationContext()).carDao().insert(car);
             return null;
         }
 
