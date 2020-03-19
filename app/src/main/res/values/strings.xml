@@ -43,4 +43,14 @@
     <string name="tvSearchStopLocation">Eindpunt</string>
     <string name="btnSearch">Zoeken</string>
     <string name="coordinateSplitCharacter">;</string>
+    <string name="tvRideDetails">Rit</string>
+    <string name="tvRideStartLocation">Vertreklocatie</string>
+    <string name="tvRideStopLocation">Aankomstlocatie</string>
+    <string name="tvRideStartTime">Vertrektijd</string>
+    <string name="tvRideStopTime">Aankomsttijd</string>
+    <string name="tvRideDate">Datum</string>
+    <string name="tvRideTimeCharge">Toegepast spitstarief</string>
+    <string name="tvRideLocationCharge">LocationCharge</string>
+    <string name="tvRideDistance">Aantal kilometer</string>
+    <string name="tvRideCost">Kosten</string>
 </resources>

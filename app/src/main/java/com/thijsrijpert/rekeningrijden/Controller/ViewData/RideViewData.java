@@ -242,8 +242,8 @@ public class RideViewData extends SuperViewData{
                 return;
             }
 
-            ((RideOverviewActivity)weakActivity.get()).getRidePagerAdapter()
-                    .getRideOverviewFragment().getRecyclerView().setAdapter(new RideOverviewAdapter(rides));
+            ((RideOverviewAdapter)((RideOverviewActivity)weakActivity.get()).getRidePagerAdapter()
+                    .getListDetailsFragment().getListFragment().getAdapter()).setData(rides);
             ((RideOverviewActivity)weakActivity.get()).getRidePagerAdapter()
                     .getRideYearTotalFragment().getRecyclerView().setAdapter(new RideYearTotalAdapter(rides));
         }

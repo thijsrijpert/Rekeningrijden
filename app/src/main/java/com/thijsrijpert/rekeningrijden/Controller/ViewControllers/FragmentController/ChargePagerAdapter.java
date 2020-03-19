@@ -1,7 +1,6 @@
 package com.thijsrijpert.rekeningrijden.Controller.ViewControllers.FragmentController;
 
 import android.content.Context;
-import android.location.Location;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;

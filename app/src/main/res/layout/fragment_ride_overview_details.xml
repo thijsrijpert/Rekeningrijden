@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Controller.ViewControllers.FragmentController.RideOverviewDetailsFragment">
+
+
+    <TextView
+        android:id="@+id/tvRideDetails"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="32dp"
+        android:text="@string/tvRideDetails"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvRideStartLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/tvRideStartLocation"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvRideDetails" />
+
+    <TextView
+        android:id="@+id/tveRideStartLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/tvRideStartLocation"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/tvRideStartLocation"
+        app:layout_constraintStart_toEndOf="@+id/tvRideStartLocation" />
+
+    <TextView
+        android:id="@+id/tvRideStopLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/tvRideStopLocation"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvRideStartLocation" />
+
+    <TextView
+        android:id="@+id/tveRideStopLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/tvRideStopLocation"
+        app:layout_constraintEnd_toEndOf="@+id/tveRideStartLocation"
+        app:layout_constraintStart_toStartOf="@+id/tveRideStartLocation" />
+
+    <TextView
+        android:id="@+id/tvRideStartTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/tvRideStartTime"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvRideStopLocation" />
+
+    <TextView
+        android:id="@+id/tveRideStartTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/tvRideStartTime"
+        app:layout_constraintEnd_toEndOf="@+id/tveRideStopLocation"
+        app:layout_constraintStart_toStartOf="@+id/tveRideStopLocation" />
+
+    <TextView
+        android:id="@+id/tvRideStopTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/tvRideStopTime"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvRideStartTime" />
+
+    <TextView
+        android:id="@+id/tveRideStopTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/tvRideStopTime"
+        app:layout_constraintEnd_toEndOf="@+id/tveRideStartTime"
+        app:layout_constraintStart_toStartOf="@+id/tveRideStartTime" />
+
+    <TextView
+        android:id="@+id/tvRideDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/tvRideDate"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvRideStopTime" />
+
+    <TextView
+        android:id="@+id/tveRideDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/tvRideDate"
+        app:layout_constraintEnd_toEndOf="@+id/tveRideStopTime"
+        app:layout_constraintStart_toStartOf="@+id/tveRideStopTime" />
+
+    <TextView
+        android:id="@+id/tvRideTimeCharge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/tvRideTimeCharge"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvRideDate" />
+
+    <TextView
+        android:id="@+id/tveRideTimeCharge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/tvRideLocationCharge"
+        app:layout_constraintEnd_toEndOf="@+id/tveRideLocationCharge"
+        app:layout_constraintStart_toStartOf="@+id/tveRideLocationCharge" />
+
+    <TextView
+        android:id="@+id/tvRideLocationCharge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/tvRideLocationCharge"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvRideTimeCharge" />
+
+    <TextView
+        android:id="@+id/tveRideLocationCharge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/tvRideTimeCharge"
+        app:layout_constraintEnd_toEndOf="@+id/tveRideDate"
+        app:layout_constraintStart_toStartOf="@+id/tveRideDate" />
+
+    <TextView
+        android:id="@+id/tvRideDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/tvRideDistance"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvRideLocationCharge" />
+
+    <TextView
+        android:id="@+id/tveRideDistance"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/tvRideDistance"
+        app:layout_constraintEnd_toEndOf="@+id/tveRideTimeCharge"
+        app:layout_constraintStart_toStartOf="@+id/tveRideTimeCharge" />
+
+    <TextView
+        android:id="@+id/tvRideCost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/tvRideCost"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tveRideCost"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@+id/tvRideCost"
+        app:layout_constraintEnd_toEndOf="@+id/tveRideDistance"
+        app:layout_constraintStart_toStartOf="@+id/tveRideDistance" />
+</androidx.constraintlayout.widget.ConstraintLayout>

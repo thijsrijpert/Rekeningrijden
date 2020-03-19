@@ -16,11 +16,10 @@ import com.thijsrijpert.rekeningrijden.R;
 import java.io.IOException;
 import java.util.List;
 
-public class RideOverviewAdapter extends RecyclerView.Adapter<RideOverviewAdapter.RideViewHolder> {
-    private List<Ride> rides;
+public class RideOverviewAdapter extends ListAdapter<RideOverviewAdapter.RideViewHolder, Ride> {
 
     public RideOverviewAdapter(List<Ride> rides){
-        this.rides = rides;
+        this.data = rides;
     }
 
     @NonNull
@@ -33,11 +32,11 @@ public class RideOverviewAdapter extends RecyclerView.Adapter<RideOverviewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull RideViewHolder holder, int position) {
-        holder.bind(rides.get(position));
+        holder.bind(data.get(position),listener);
     }
 
     @Override
-    public int getItemCount() { return rides.size(); }
+    public int getItemCount() { return data.size(); }
 
     class RideViewHolder extends RecyclerView.ViewHolder{
 
@@ -45,22 +44,28 @@ public class RideOverviewAdapter extends RecyclerView.Adapter<RideOverviewAdapte
         TextView stopLocation;
         TextView date;
         TextView price;
+        View itemView;
 
         RideViewHolder(@NonNull View itemView) {
             super(itemView);
+            this.itemView = itemView;
             startLocation = itemView.findViewById(R.id.tvStartLocation);
             stopLocation = itemView.findViewById(R.id.tvStopLocation);
             date = itemView.findViewById(R.id.tvDate);
             price = itemView.findViewById(R.id.tvPrice);
         }
 
-        void bind(Ride ride){
+        void bind(Ride ride, OnItemClickListener listener){
             if(ride.getStoplocation() != null){
                 startLocation.setText(getLocationName(ride.getStartlocation()));
                 stopLocation.setText(getLocationName(ride.getStoplocation()));
                 date.setText(ride.getDate().toString());
                 price.setText("2");
             }
+            itemView.setOnClickListener((view) -> {
+                listener.onItemClick(ride);
+            });
+
         }
 
         private String getLocationName(@NonNull String coordinate){

@@ -12,13 +12,13 @@ import com.thijsrijpert.rekeningrijden.R;
 public class RidePagerAdapter extends FragmentPagerAdapter {
 
     private final Context context;
-    private final RideOverviewFragment rideOverviewFragment;
+    private final ListDetailsFragment listDetailsFragment;
     private final RideYearTotalFragment rideYearTotalFragment;
     private final RideSearchFragment rideSearchFragment;
 
     public RidePagerAdapter(@NonNull FragmentManager fm, Context context) {
         super(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT);
-        rideOverviewFragment = new RideOverviewFragment();
+        listDetailsFragment = new ListDetailsFragment(new RideOverviewFragment(), new RideOverviewDetailsFragment());
         rideYearTotalFragment = new RideYearTotalFragment();
         rideSearchFragment = new RideSearchFragment();
         this.context = context;
@@ -28,7 +28,7 @@ public class RidePagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                return rideOverviewFragment;
+                return listDetailsFragment;
             case 1:
                 return rideYearTotalFragment;
             case 2:
@@ -56,8 +56,8 @@ public class RidePagerAdapter extends FragmentPagerAdapter {
         }
     }
 
-    public RideOverviewFragment getRideOverviewFragment() {
-        return rideOverviewFragment;
+    public ListDetailsFragment getListDetailsFragment() {
+        return listDetailsFragment;
     }
 
     public RideYearTotalFragment getRideYearTotalFragment() {

@@ -5,6 +5,7 @@ import androidx.annotation.Nullable;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -12,7 +13,7 @@ import java.time.LocalTime;
  * Contains the model object for a ride.
  */
 @Entity(primaryKeys = {"numberplate", "starttime", "date"}, tableName = "Rides")
-public class Ride {
+public class Ride implements Serializable {
 	@NonNull
 	private final Car numberplate;
 	@NonNull

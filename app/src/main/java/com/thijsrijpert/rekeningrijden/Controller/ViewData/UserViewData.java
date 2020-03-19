@@ -9,9 +9,9 @@ import com.thijsrijpert.rekeningrijden.Controller.Database.AppDatabase;
 import com.thijsrijpert.rekeningrijden.Controller.Database.UserDao;
 import com.thijsrijpert.rekeningrijden.Controller.PreferencesManager;
 import com.thijsrijpert.rekeningrijden.Controller.ViewControllers.ActivityController.CarActivity;
+import com.thijsrijpert.rekeningrijden.Controller.ViewControllers.ActivityController.ChargeActivity;
 import com.thijsrijpert.rekeningrijden.Controller.ViewControllers.ActivityController.LoginActivity;
 import com.thijsrijpert.rekeningrijden.Controller.ViewControllers.ActivityController.RegistrationActivity;
-import com.thijsrijpert.rekeningrijden.Controller.ViewControllers.ActivityController.RideRegistrationActivity;
 import com.thijsrijpert.rekeningrijden.Model.Role;
 import com.thijsrijpert.rekeningrijden.Model.User;
 import com.thijsrijpert.rekeningrijden.R;
@@ -68,7 +68,7 @@ public class UserViewData extends SuperViewData {
             }else{
                 PreferencesManager.getInstance(weakActivity.get()).storeObjectInPref("User", user);
 
-                Intent intent = new Intent(weakActivity.get().getApplicationContext(), RideRegistrationActivity.class);
+                Intent intent = new Intent(weakActivity.get().getApplicationContext(), ChargeActivity.class);
                 weakActivity.get().startActivity(intent);
             }
         }

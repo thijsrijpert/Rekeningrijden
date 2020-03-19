@@ -37,6 +37,7 @@ public class OverviewActivity extends SuperActivity {
 		pager.setAdapter(adapter);
 		tabLayout.setupWithViewPager(pager);
 		tabLayout.bringToFront();
+		pager.setOffscreenPageLimit(2);
 	}
 
 }

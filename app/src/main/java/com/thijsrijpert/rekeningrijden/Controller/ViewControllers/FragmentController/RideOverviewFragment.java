@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -15,15 +14,11 @@ import com.thijsrijpert.rekeningrijden.R;
 
 import java.util.ArrayList;
 
-public class RideOverviewFragment extends Fragment {
+public class RideOverviewFragment extends ListFragment {
 
-    private RecyclerView recyclerView;
-
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public RideOverviewFragment() {
+    public RideOverviewFragment(){
+        ArrayList<Ride> rides = new ArrayList<>();
+        adapter = new RideOverviewAdapter(rides);
     }
 
     @Override
@@ -40,13 +35,11 @@ public class RideOverviewFragment extends Fragment {
         recyclerView = (RecyclerView) view;
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-        ArrayList<Ride> rides = new ArrayList<>();
-        recyclerView.setAdapter(new RideOverviewAdapter(rides));
+        recyclerView.setAdapter(adapter);
 
         return view;
     }
 
-    public RecyclerView getRecyclerView() {
-        return recyclerView;
-    }
+
+
 }
