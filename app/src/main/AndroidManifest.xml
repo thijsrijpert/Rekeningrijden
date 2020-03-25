@@ -6,6 +6,8 @@
         android:name="android.permission.ACCESS_COARSE_LOCATION"/>
     <uses-permission
         android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission
+        android:name="android.permission.INTERNET"/>
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,7 +17,7 @@
         android:theme="@style/AppThemeNoBar"
         tools:ignore="GoogleAppIndexingWarning">
         <activity
-            android:name="com.thijsrijpert.rekeningrijden.Controller.ViewControllers.ActivityController.LoginActivity"
+            android:name="com.thijsrijpert.rekeningrijden.controller.view.activity.LoginActivity"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,19 +25,20 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.thijsrijpert.rekeningrijden.Controller.ViewControllers.ActivityController.CarActivity">
+            android:name="com.thijsrijpert.rekeningrijden.controller.view.activity.CarActivity">
         </activity>
         <activity
-            android:name="com.thijsrijpert.rekeningrijden.Controller.ViewControllers.ActivityController.RideOverviewActivity">
+            android:name="com.thijsrijpert.rekeningrijden.controller.view.activity.RideOverviewActivity">
         </activity>
         <activity
-            android:name="com.thijsrijpert.rekeningrijden.Controller.ViewControllers.ActivityController.RideRegistrationActivity">
+            android:name="com.thijsrijpert.rekeningrijden.controller.view.activity.RideRegistrationActivity">
         </activity>
         <activity
-            android:name="com.thijsrijpert.rekeningrijden.Controller.ViewControllers.ActivityController.RegistrationActivity">
+            android:name="com.thijsrijpert.rekeningrijden.controller.view.activity.RegistrationActivity"
+            android:parentActivityName=".controller.view.activity.LoginActivity">
         </activity>
         <activity
-            android:name="com.thijsrijpert.rekeningrijden.Controller.ViewControllers.ActivityController.ChargeActivity">
+            android:name="com.thijsrijpert.rekeningrijden.controller.view.activity.ChargeActivity">
         </activity>
     </application>
 

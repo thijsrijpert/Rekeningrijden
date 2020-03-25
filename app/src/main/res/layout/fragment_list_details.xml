@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Controller.ViewControllers.FragmentController.ListDetailsFragment">
+    tools:context=".controller.view.fragment.ListDetailsFragment">
 
     <FrameLayout
         android:id="@+id/listDetailsFragmentHolder"

@@ -26,7 +26,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:context=".Controller.ViewControllers.FragmentController.RideYearTotalFragment"
+        tools:context=".controller.view.fragment.RideYearTotalFragment"
         tools:listitem="@layout/fragment_ride_year_total" />
 
     <TextView

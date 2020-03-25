@@ -53,4 +53,16 @@
     <string name="tvRideLocationCharge">LocationCharge</string>
     <string name="tvRideDistance">Aantal kilometer</string>
     <string name="tvRideCost">Kosten</string>
+    <string name="tvCoordinate">Coordinaat</string>
+    <string name="tvName">Naam</string>
+    <string name="tvChargeCoordinate">Coordinaat</string>
+    <string name="Prijs">tvChargePrice</string>
+    <string name="tvChargePrice">Prijs</string>
+    <string name="btnChargeUpdate">Bevestigen</string>
+    <string name="btnChargeDelete">Verwijderen</string>
+    <string name="tvChargePrimary">Bijzonderheid</string>
+    <string name="menuChargeNew">Nieuw</string>
+
+    <item name="reservedFrameLayoutId1" type="id"/>
+    <item name="reservedFrameLayoutId2" type="id"/>
 </resources>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".controller.view.fragment.ChargeDetailsFragment">
+
+
+    <TextView
+        android:id="@+id/tvChargePrimary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="64dp"
+        android:text="@string/tvChargePrimary"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <EditText
+        android:id="@+id/etChargePrimary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="time"
+        android:digits="1234567890.:"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toEndOf="@+id/tvChargePrimary"
+        app:layout_constraintTop_toTopOf="@+id/tvChargePrimary" />
+
+    <TextView
+        android:id="@+id/tvChargePrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="64dp"
+        android:text="@string/tvChargePrice"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvChargePrimary" />
+
+
+    <EditText
+        android:id="@+id/etChargePrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:digits="1234567890."
+        app:layout_constraintEnd_toEndOf="@+id/etChargePrimary"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/etChargePrimary"
+        app:layout_constraintTop_toTopOf="@+id/tvChargePrice" />
+
+    <Button
+        android:id="@+id/btnChargeDelete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/btnChargeDelete"
+        app:layout_constraintEnd_toEndOf="@+id/btnChargeUpdate"
+        app:layout_constraintTop_toBottomOf="@+id/btnChargeUpdate" />
+
+    <Button
+        android:id="@+id/btnChargeUpdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/btnChargeUpdate"
+        app:layout_constraintEnd_toEndOf="@+id/etChargePrice"
+        app:layout_constraintTop_toBottomOf="@+id/etChargePrice" />
+</androidx.constraintlayout.widget.ConstraintLayout>
