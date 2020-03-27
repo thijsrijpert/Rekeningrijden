@@ -17,10 +17,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/btnDriverStart"
+        android:layout_marginBottom="@dimen/activity_registration_button_car_margin"
         app:layout_constraintBottom_toTopOf="@+id/spRideCar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="@dimen/activity_registration_button_car_margin"/>
+        style="@style/raisedButton"/>
 
     <Spinner
         android:id="@+id/spRideCar"

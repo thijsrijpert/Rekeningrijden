@@ -2,8 +2,12 @@
     <style name="AppThemeNoBar" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:windowNoTitle">true</item>
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:fontFamily">@font/font</item>
+        <!--<item name="android:fontFamily">@font/font_copy_safe</item>-->
+        <item name="android:fontWeight">400</item>
+        <item name="android:textColor">@color/colorGrey</item>
     </style>
 
     <style name="Header">
@@ -12,4 +16,25 @@
         <item name="android:layout_marginTop">20dp</item>
     </style>
 
+    <style name="flatButton" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="backgroundTint">@color/colorWhite</item>
+        <item name="android:fontFamily">@font/font</item>
+        <!--<item name="android:fontFamily">@font/font_copy_safe</item>-->
+        <item name="android:fontWeight">800</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:colorPressedHighlight">@color/colorPrimary20</item>
+    </style>
+
+    <style name="raisedButton" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">@color/colorWhite</item>
+        <item name="backgroundTint">@color/colorPrimary</item>
+        <item name="android:fontFamily">@font/font</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:fontWeight">800</item>
+        <item name="android:padding">16dp</item>
+        <item name="android:layout_height">36dp</item>
+        <item name="android:colorPressedHighlight">@color/colorPrimary20</item>
+    </style>
 </resources>

@@ -58,8 +58,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
         android:text="@string/btnSearch"
+        style="@style/flatButton"
         app:layout_constraintEnd_toEndOf="@+id/spSearchStopLocation"
-        app:layout_constraintTop_toBottomOf="@+id/spSearchStopLocation" />
+        app:layout_constraintTop_toBottomOf="@+id/spSearchStopLocation"/>
 
     <EditText
         android:id="@+id/etSearchDate"

@@ -62,6 +62,7 @@
     <string name="btnChargeDelete">Verwijderen</string>
     <string name="tvChargePrimary">Bijzonderheid</string>
     <string name="menuChargeNew">Nieuw</string>
+    <string name="tvLogo">Schoolproject</string>
 
     <item name="reservedFrameLayoutId1" type="id"/>
     <item name="reservedFrameLayoutId2" type="id"/>

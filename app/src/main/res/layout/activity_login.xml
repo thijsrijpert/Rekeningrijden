@@ -6,6 +6,21 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <!--
+    Book image: Wikipedia (z.d.) Black book icon. https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Black_book_icon.svg/1024px-Black_book_icon.svg.png
+    Rijksoverheid (z.d) Logo based on Rijksoverheid Logo https://www.rijkshuisstijl.nl/basiselementen/basiselementen-offline/lettertype
+    Disclaimer: Not Affiliated with Rijksoverheid in ANY WAY. Content is used for personal / educational use and testing purposes.
+    All rights belong to the respective right holders
+    -->
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/appCompatImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <TextView
         android:id="@+id/tvName"
@@ -50,6 +65,7 @@
         android:id="@+id/btnLogin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/raisedButton"
         android:layout_marginTop="32dp"
         android:text="@string/btnLogin"
         app:layout_constraintEnd_toEndOf="@+id/etPassword"
@@ -61,9 +77,20 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
+        style="@style/raisedButton"
         android:text="@string/btnLoginRegistration"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/tvLogo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/appCompatImageView" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
