@@ -40,14 +40,18 @@ public class UserViewData extends SuperViewData {
         String name = activity.getEtName().getText().toString();
         String username = activity.getEtUsername().getText().toString();
         String password = activity.getEtPassword().getText().toString();
-        String zipcode = activity.getEtZipcode().getText().toString();
+        String zipcode = activity.getEtZipcode().getText().toString().trim().replaceAll("\\s", "").toUpperCase();
         String homenumber = activity.getEtHomenumber().getText().toString();
-        String phonenumber = activity.getEtPhonenumber().getText().toString();
+        String phonenumber = activity.getEtPhonenumber().getText().toString().trim().replaceAll("\\s", "");
 
-        User user = new User(username, zipcode, homenumber, phonenumber, name, password, new Role("Advanced"));
+        if(username.equals("") || zipcode.equals("") || homenumber.equals("") || phonenumber.equals("") || name.equals("") || password.equals("")) {
+            Toast.makeText(activity.getApplicationContext(), "Er zijn velden niet ingevuld", Toast.LENGTH_SHORT).show();
+        }else{
+            User user = new User(username, zipcode, homenumber, phonenumber, name, password, new Role("Advanced"));
 
-        RegistrationTask registrationTask = new RegistrationTask(activity, user);
-        registrationTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+            RegistrationTask registrationTask = new RegistrationTask(activity, user);
+            registrationTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }
     }
 
 
@@ -116,9 +120,15 @@ public class UserViewData extends SuperViewData {
             if(activityIsActive() && success) {
                 PreferencesManager.getInstance(weakActivity.get()).storeObjectInPref("User", user);
 
-                Intent intent = new Intent(weakActivity.get().getApplicationContext(), CarActivity.class);
+                Intent intent;
+                if(((RegistrationActivity)weakActivity.get()).getEtUsername().isEnabled()){
+                    intent = new Intent(weakActivity.get().getApplicationContext(), CarActivity.class);
+                }else{
+                    intent = new Intent(weakActivity.get().getApplicationContext(), RideRegistrationActivity.class);
+                }
+
                 weakActivity.get().startActivity(intent);
-            }else if(!success){
+            }else if(activityIsActive() && !success){
                 Toast.makeText(weakActivity.get().getApplicationContext(), "Deze gebruikersnaam bestaat al", Toast.LENGTH_SHORT).show();
             }
         }

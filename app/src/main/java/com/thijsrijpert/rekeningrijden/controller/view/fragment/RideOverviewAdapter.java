@@ -56,11 +56,11 @@ public class RideOverviewAdapter extends ListAdapter<RideOverviewAdapter.RideVie
         }
 
         void bind(Ride ride, OnItemClickListener listener){
+            startLocation.setText(getLocationName(ride.getStartlocation()));
+            date.setText(ride.getDate().toString());
+            price.setText("2");
             if(ride.getStoplocation() != null){
-                startLocation.setText(getLocationName(ride.getStartlocation()));
                 stopLocation.setText(getLocationName(ride.getStoplocation()));
-                date.setText(ride.getDate().toString());
-                price.setText("2");
             }
             itemView.setOnClickListener((view) -> listener.onItemClick(ride));
 

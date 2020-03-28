@@ -2,6 +2,7 @@ package com.thijsrijpert.rekeningrijden.controller.viewdata;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -26,31 +27,41 @@ public class CarViewData extends SuperViewData{
     }
 
     public void addCar(){
-        Car car = getCarObject();
-
-        AddCarTask addCarTask = new AddCarTask((CarActivity)activity, car);
-        addCarTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        try{
+            Car car = getCarObject();
+            AddCarTask addCarTask = new AddCarTask((CarActivity)activity, car);
+            addCarTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }catch(NullPointerException e){
+            Toast.makeText(activity.getApplicationContext(), "Kenteken niet ingevoerd", Toast.LENGTH_SHORT).show();
+        }
     }
 
     public void updateCar(){
-        Car car = getCarObject();
-
-        UpdateCarTask updateCarTask = new UpdateCarTask((CarActivity)activity, car);
-        updateCarTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        try{
+            Car car = getCarObject();
+            UpdateCarTask updateCarTask = new UpdateCarTask((CarActivity)activity, car);
+            updateCarTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+        }catch(NullPointerException e){
+            Toast.makeText(activity.getApplicationContext(), "Kenteken niet ingevoerd", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    private Car getCarObject(){
-        String numberplate = ((EditText)activity.findViewById(R.id.etCarNumberplate)).getText().toString();
+    private Car getCarObject() throws NullPointerException{
+        String numberplate = ((EditText)activity.findViewById(R.id.etCarNumberplate)).getText().toString().trim().replaceAll("\\s", "");
         String brand = ((Spinner)activity.findViewById(R.id.spCarBrand)).getSelectedItem().toString();
         //String color = ((EditText)activity.findViewById(R.id.etCarNumberplate)).getText().toString();
         String color = "#FFFFFF";
         String type = ((Spinner)activity.findViewById(R.id.spCarType)).getSelectedItem().toString();
 
-        User user = PreferencesManager.getInstance(activity).getUserPref();
+        if(numberplate.equals("")){
+            throw new NullPointerException();
+        }else{
+            User user = PreferencesManager.getInstance(activity).getUserPref();
+            return new Car(numberplate, brand, color, type, user);
+        }
 
-        return new Car(numberplate, brand, color, type, user);
+
     }
-
 
     public void loadAllUserCars(int resourceId){
         User user = PreferencesManager.getInstance(activity).getUserPref();
@@ -85,7 +96,7 @@ public class CarViewData extends SuperViewData{
         }
     }
 
-    private static class AddCarTask extends DatabaseSyncTask<Void> {
+    private static class AddCarTask extends DatabaseSyncTask<Boolean> {
 
         private Car car;
 
@@ -95,18 +106,25 @@ public class CarViewData extends SuperViewData{
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
-            AppDatabase.getInstance(weakActivity.get().getApplicationContext()).carDao().insert(car);
-            return null;
+        protected Boolean doInBackground(Void... params) {
+            try{
+                AppDatabase.getInstance(weakActivity.get().getApplicationContext()).carDao().insert(car);
+            }catch(SQLiteConstraintException e){
+                return false;
+            }
+
+            return true;
         }
 
         @Override
-        protected void onPostExecute(Void empty) {
-            if(activityIsActive()){
+        protected void onPostExecute(Boolean success) {
+            if(activityIsActive() && success){
                 Toast.makeText(weakActivity.get().getApplicationContext(), "Auto succesvol toegevoegd.", Toast.LENGTH_SHORT).show();
 
                 Intent intent = new Intent(weakActivity.get().getApplicationContext(), RideRegistrationActivity.class);
                 weakActivity.get().startActivity(intent);
+            }else if(activityIsActive() && !success){
+                Toast.makeText(weakActivity.get().getApplicationContext(), "De Auto is al eens ingevoerd", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -132,7 +150,6 @@ public class CarViewData extends SuperViewData{
             if(activityIsActive()) {
                 if(cars.size() > 0 && weakActivity.get() instanceof CarActivity){
                     ((CarActivity)weakActivity.get()).getEtNumberplate().setEnabled(false);
-                    cars.add(0, new Car("Leeg"));
                 }else if(weakActivity.get() instanceof CarActivity){
                     ((CarActivity) weakActivity.get()).getSpCarSearchNumberplate().setVisibility(View.INVISIBLE);
                 }

@@ -3,12 +3,16 @@ package com.thijsrijpert.rekeningrijden.controller.viewdata;
 import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
+import android.location.Address;
+import android.location.Geocoder;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -26,6 +30,7 @@ import com.thijsrijpert.rekeningrijden.model.Car;
 import com.thijsrijpert.rekeningrijden.model.Ride;
 import com.thijsrijpert.rekeningrijden.model.User;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
