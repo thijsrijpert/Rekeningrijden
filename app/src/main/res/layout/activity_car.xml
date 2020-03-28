@@ -12,9 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
         android:text="@string/tvCarColor"
-        app:layout_constraintBottom_toBottomOf="@+id/spinner6"
+        app:layout_constraintBottom_toBottomOf="@+id/spCarColor"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/spinner6" />
+        app:layout_constraintTop_toTopOf="@+id/spCarColor" />
 
     <TextView
         android:id="@+id/tvCarBrand"
@@ -102,10 +102,10 @@
         android:layout_marginTop="32dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/tvCarType"
-        app:layout_constraintTop_toBottomOf="@+id/spinner6" />
+        app:layout_constraintTop_toBottomOf="@+id/spCarColor" />
 
     <Spinner
-        android:id="@+id/spinner6"
+        android:id="@+id/spCarColor"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"

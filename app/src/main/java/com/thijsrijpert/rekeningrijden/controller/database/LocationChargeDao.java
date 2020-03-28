@@ -18,7 +18,7 @@ public interface LocationChargeDao extends BaseDao<LocationCharge>{
 	 * Query all location charge present in the database
 	 * @return All location charges that have been added to the database
 	 */
-	@Query("SELECT * FROM locationcharges")
+	@Query("SELECT * FROM locationcharges ORDER BY location, startdate")
 	 List<LocationCharge> getAllLocationCharges();
 
 	/**
@@ -43,7 +43,7 @@ public interface LocationChargeDao extends BaseDao<LocationCharge>{
 	 * @param location the location that contains these location charges. Attribute of location charge
 	 * @return the current location charge for a specific location
 	 */
-	@Query("SELECT * FROM LocationCharges WHERe location = :location AND enddate IS NOT NULL")
+	@Query("SELECT * FROM LocationCharges WHERE location = :location AND enddate IS NOT NULL")
 	LocationCharge getCurrentLocationCharge(double location);
 
 }

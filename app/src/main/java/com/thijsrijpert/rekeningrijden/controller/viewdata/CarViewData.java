@@ -49,8 +49,7 @@ public class CarViewData extends SuperViewData{
     private Car getCarObject() throws NullPointerException{
         String numberplate = ((EditText)activity.findViewById(R.id.etCarNumberplate)).getText().toString().trim().replaceAll("\\s", "");
         String brand = ((Spinner)activity.findViewById(R.id.spCarBrand)).getSelectedItem().toString();
-        //String color = ((EditText)activity.findViewById(R.id.etCarNumberplate)).getText().toString();
-        String color = "#FFFFFF";
+        String color = ((Spinner)activity.findViewById(R.id.spCarColor)).getSelectedItem().toString();
         String type = ((Spinner)activity.findViewById(R.id.spCarType)).getSelectedItem().toString();
 
         if(numberplate.equals("")){

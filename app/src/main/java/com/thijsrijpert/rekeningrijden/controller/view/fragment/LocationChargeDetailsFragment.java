@@ -40,10 +40,7 @@ public class LocationChargeDetailsFragment extends TimeChargeDetailsFragment {
         LocationChargeViewData locationChargeViewData = new LocationChargeViewData(getActivity());
 
         btnUpdate.setOnClickListener(viewInner ->{
-            if(charge != null){
-                locationChargeViewData.endLocationCharge((LocationCharge)charge);
-            }
-            locationChargeViewData.newLocationCharge();
+            locationChargeViewData.newLocationCharge((LocationCharge)charge);
         });
         btnDelete.setOnClickListener(viewInner -> locationChargeViewData.endLocationCharge((LocationCharge)charge));
         return view;

@@ -20,8 +20,8 @@ public class RegistrationActivity extends SuperActivity {
 
 		etName = findViewById(R.id.etRegistrationName);
 		etUsername = findViewById(R.id.etRegistrationUsername);
-		etPassword = findViewById(R.id.etRegistrationZipcode);
-		etZipcode = findViewById(R.id.etRegistrationPassword);
+		etPassword = findViewById(R.id.etRegistrationPassword);
+		etZipcode = findViewById(R.id.etRegistrationZipcode);
 		etHomenumber = findViewById(R.id.etRegistrationHomeNumber);
 		etPhonenumber = findViewById(R.id.etRegistrationPhonenumber);
 

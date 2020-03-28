@@ -3,6 +3,7 @@ package com.thijsrijpert.rekeningrijden.controller.view.fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -61,6 +62,24 @@ public class TimeChargeAdapter extends ListAdapter<TimeChargeAdapter.TimeChargeV
                 chargeTimePrice.setText(String.format(Locale.getDefault(), "%.2f",charge.getPrice()));
 
                 view.setOnClickListener((view) -> listener.onItemClick(charge));
+
+                LinearLayout.LayoutParams layoutParamsPrice = (LinearLayout.LayoutParams)chargeTimePrice.getLayoutParams();
+                layoutParamsPrice.setMargins(16,16,16,16);
+                layoutParamsPrice.width = 2000;
+                layoutParamsPrice.height = 100;
+                LinearLayout.LayoutParams layoutParamsLocation = (LinearLayout.LayoutParams)chargeTime.getLayoutParams();
+                layoutParamsLocation.setMargins(0,0,0,0);
+                layoutParamsLocation.width = 600;
+                layoutParamsLocation.height = 100;
+            }else{
+                LinearLayout.LayoutParams layoutParamsPrice = (LinearLayout.LayoutParams)chargeTimePrice.getLayoutParams();
+                layoutParamsPrice.setMargins(0,0,0,0);
+                layoutParamsPrice.width = 0;
+                layoutParamsPrice.height = 0;
+                LinearLayout.LayoutParams layoutParamsLocation = (LinearLayout.LayoutParams)chargeTime.getLayoutParams();
+                layoutParamsLocation.setMargins(0,0,0,0);
+                layoutParamsLocation.width = 0;
+                layoutParamsLocation.height = 0;
             }
         }
     }

@@ -50,7 +50,7 @@ public class ListDetailsFragment<T extends Serializable> extends Fragment implem
 
     public void onStart(){
         super.onStart();
-        if (getFragmentManager() != null) {
+        if (getFragmentManager() != null && !listFragment.isAdded()) {
             FragmentTransaction transaction = getFragmentManager().beginTransaction();
             transaction.add(id, listFragment);
             transaction.addToBackStack(null);

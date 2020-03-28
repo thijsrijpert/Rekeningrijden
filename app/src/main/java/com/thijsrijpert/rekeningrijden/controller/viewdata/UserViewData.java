@@ -44,10 +44,29 @@ public class UserViewData extends SuperViewData {
         String homenumber = activity.getEtHomenumber().getText().toString();
         String phonenumber = activity.getEtPhonenumber().getText().toString().trim().replaceAll("\\s", "");
 
-        if(username.equals("") || zipcode.equals("") || homenumber.equals("") || phonenumber.equals("") || name.equals("") || password.equals("")) {
+        if(username.equals("") || zipcode.equals("") || homenumber.equals("") || phonenumber.equals("") || name.equals("") || password.equals("")){
             Toast.makeText(activity.getApplicationContext(), "Er zijn velden niet ingevuld", Toast.LENGTH_SHORT).show();
+        }else if(zipcode.length() != 6){
+            if(zipcode.length() < 6){
+                Toast.makeText(activity.getApplicationContext(), "De postcode is te kort", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(activity.getApplicationContext(), "De postcode is te lang", Toast.LENGTH_SHORT).show();
+            }
+        }else if(phonenumber.length() != 10){
+            if(phonenumber.length() < 10){
+                Toast.makeText(activity.getApplicationContext(), "Het telefoonnummer is te kort", Toast.LENGTH_SHORT).show();
+            }else{
+                Toast.makeText(activity.getApplicationContext(), "Het telefoonnummer is te lang", Toast.LENGTH_SHORT).show();
+            }
         }else{
-            User user = new User(username, zipcode, homenumber, phonenumber, name, password, new Role("Advanced"));
+            User oldUser = PreferencesManager.getInstance(getActivity()).getUserPref();
+            Role role;
+            if(oldUser != null){
+                role = oldUser.getRole();
+            }else{
+                role = new Role("Advanced");
+            }
+            User user = new User(username, zipcode, homenumber, phonenumber, name, password, role);
 
             RegistrationTask registrationTask = new RegistrationTask(activity, user);
             registrationTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -123,6 +142,8 @@ public class UserViewData extends SuperViewData {
                 Intent intent;
                 if(((RegistrationActivity)weakActivity.get()).getEtUsername().isEnabled()){
                     intent = new Intent(weakActivity.get().getApplicationContext(), CarActivity.class);
+                }else if(user.getRole().getRole().equals("Admin")) {
+                    intent = new Intent(weakActivity.get().getApplicationContext(), ChargeActivity.class);
                 }else{
                     intent = new Intent(weakActivity.get().getApplicationContext(), RideRegistrationActivity.class);
                 }

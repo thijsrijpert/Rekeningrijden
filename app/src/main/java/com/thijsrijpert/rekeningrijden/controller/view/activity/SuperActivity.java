@@ -68,12 +68,20 @@ public class SuperActivity extends AppCompatActivity {
                 case "Admin":
                     menu.findItem(R.id.menuCar).setVisible(false);
                     menu.findItem(R.id.menuOverview).setVisible(false);
-                    if(((ChargeActivity)this).getPager().getCurrentItem() == 2 ||
-                            ((ChargeActivity)this).getChargePagerAdapter().getLocationListDetailsFragment().getDetailsFragment().isVisible() ||
-                            ((ChargeActivity)this).getChargePagerAdapter().getTimeListDetailsFragment().getDetailsFragment().isVisible()
-                    ){
+                    if(this instanceof ChargeActivity){
+                        if(((ChargeActivity)this).getPager().getCurrentItem() == 2 ||
+                                ((ChargeActivity)this).getChargePagerAdapter().getLocationListDetailsFragment().getDetailsFragment().isVisible() ||
+                                ((ChargeActivity)this).getChargePagerAdapter().getTimeListDetailsFragment().getDetailsFragment().isVisible()
+                        ){
+                            menu.findItem(R.id.menuChargeNew).setVisible(false);
+                        }
+                    }else{
+                        menu.findItem(R.id.menuCar).setVisible(false);
+                        menu.findItem(R.id.menuOverview).setVisible(false);
                         menu.findItem(R.id.menuChargeNew).setVisible(false);
+                        menu.findItem(R.id.menuAccount).setVisible(false);
                     }
+
                     break;
                 case "Advanced":
                     menu.findItem(R.id.menuChargeNew).setVisible(false);

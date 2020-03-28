@@ -3,16 +3,13 @@ package com.thijsrijpert.rekeningrijden.controller.viewdata;
 import android.Manifest;
 import android.app.Activity;
 import android.content.pm.PackageManager;
-import android.location.Address;
-import android.location.Geocoder;
+import android.database.sqlite.SQLiteConstraintException;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.annotation.NonNull;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
@@ -30,7 +27,6 @@ import com.thijsrijpert.rekeningrijden.model.Car;
 import com.thijsrijpert.rekeningrijden.model.Ride;
 import com.thijsrijpert.rekeningrijden.model.User;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.List;
@@ -74,7 +70,12 @@ public class RideViewData extends SuperViewData{
             //Get the ride date
             LocalDate date = LocalDate.now();
 
-            Ride ride = new Ride(car, getCoordinatesString(location), starttime, date);
+            int hour =  starttime.getHour();
+            int minute = starttime.getMinute();
+
+            long rounded = hour * 60 * 60 + (minute - minute%5) * 60;
+
+            Ride ride = new Ride(car, getCoordinatesString(location), LocalTime.ofSecondOfDay(rounded), date);
 
             //Insert it to the database
             RideRegistrationTask rideRegistrationTask = new RideRegistrationTask((RideRegistrationActivity)activity, ride);
@@ -99,10 +100,15 @@ public class RideViewData extends SuperViewData{
 
             LocalTime stoptime = LocalTime.now();
 
+            int hour =  stoptime.getHour();
+            int minute = stoptime.getMinute();
+
+            long rounded = hour * 60 * 60 + (minute - minute%5) * 60;
+
             Ride ride = PreferencesManager.getInstance(activity).getRidePref();
 
             ride.setStoplocation(getCoordinatesString(location));
-            ride.setStoptime(stoptime);
+            ride.setStoptime(LocalTime.ofSecondOfDay(rounded));
 
             RideUpdateTask rideUpdateTask = new RideUpdateTask((RideRegistrationActivity)activity, ride);
             rideUpdateTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
@@ -172,7 +178,7 @@ public class RideViewData extends SuperViewData{
         RideOverviewDetailsFragment fragment = (RideOverviewDetailsFragment) ((RideOverviewActivity) activity)
                 .getRidePagerAdapter().getListDetailsFragment().getDetailsFragment();
         TextView costs = fragment.getTveCosts();
-        if(fragment.getDistance() > 0) {
+        if(fragment.getDistance() > 0 && !fragment.getTveStartTime().getText().equals(fragment.getTveStopTime().getText())) {
             TextView locationCharge = fragment.getTveLocationCharge();
             TextView timeCharge = fragment.getTveLocationCharge();
             Double defaultCharge = fragment.getDefaultCharge();
@@ -194,7 +200,7 @@ public class RideViewData extends SuperViewData{
         return String.format(Locale.US, "%.2f;%.2f", location.getLatitude(), location.getLongitude());
     }
 
-    private static class RideRegistrationTask extends DatabaseSyncTask<Void> {
+    private static class RideRegistrationTask extends DatabaseSyncTask<Boolean> {
 
         private Ride ride;
 
@@ -204,24 +210,31 @@ public class RideViewData extends SuperViewData{
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
-            AppDatabase.getInstance(weakActivity.get()).rideDao().insert(ride);
-            return null;
+        protected Boolean doInBackground(Void... params) {
+            try{
+                AppDatabase.getInstance(weakActivity.get()).rideDao().insert(ride);
+            }catch(SQLiteConstraintException e){
+                return false;
+            }
+            return true;
         }
 
         @Override
-        protected void onPostExecute(Void empty) {
-            if(weakActivity.get() == null) {
-                return;
+        protected void onPostExecute(Boolean success) {
+            if(activityIsActive() && success) {
+                PreferencesManager.getInstance(weakActivity.get()).storeObjectInPref("Ride", ride);
+
+                Toast.makeText(weakActivity.get().getApplicationContext(), "Rit is gestart.", Toast.LENGTH_SHORT).show();
+
+                Button button = ((RideRegistrationActivity)weakActivity.get()).getBtnRideRegistration();
+                button.setText(R.string.btnDriverStop);
+            }else if(activityIsActive() && !success){
+                int hour = ride.getStarttime().getHour();
+                int minute = ride.getStarttime().getMinute();
+                LocalTime newTime = LocalTime.ofSecondOfDay(hour  * 60 * 60 + (minute + 5) * 60);
+
+                Toast.makeText(weakActivity.get().getApplicationContext(), "Er is recent een rit gestart de volgende rit kan gestart worden om: " + newTime.toString(), Toast.LENGTH_LONG).show();
             }
-
-            PreferencesManager.getInstance(weakActivity.get()).storeObjectInPref("Ride", ride);
-
-
-            Toast.makeText(weakActivity.get().getApplicationContext(), "Rit is gestart.", Toast.LENGTH_SHORT).show();
-
-            Button button = ((RideRegistrationActivity)weakActivity.get()).getBtnRideRegistration();
-            button.setText(R.string.btnDriverStop);
         }
     }
 

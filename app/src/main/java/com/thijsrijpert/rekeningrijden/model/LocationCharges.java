@@ -7,7 +7,7 @@ public class LocationCharges extends Charges<LocationCharge> {
         int middle = -1;
         int right = charges.size();
         double[] cCoordinates = locationToDouble(c.getLocation());
-        while(middle != left && middle != right && left <= right){
+        while(middle != left && middle != right && left < right){
             middle = left + (right - left)/2;
             LocationCharge t = charges.get(middle);
             if(t.getLocation().equals(c.getLocation())){

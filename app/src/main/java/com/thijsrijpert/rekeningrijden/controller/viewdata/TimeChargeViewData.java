@@ -1,8 +1,8 @@
 package com.thijsrijpert.rekeningrijden.controller.viewdata;
 
 import android.app.Activity;
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.AsyncTask;
-import android.view.View;
 import android.widget.Toast;
 
 import com.thijsrijpert.rekeningrijden.controller.database.AppDatabase;
@@ -31,7 +31,7 @@ public class TimeChargeViewData extends SuperViewData{
     /**
      * Create a new time charge database and model object
      */
-    public void newTimeCharge(){
+    public void newTimeCharge(TimeCharge oldCharge){
         ChargeActivity activity = (ChargeActivity)this.activity;
         //get the current fragment
         TimeChargeDetailsFragment fragment = (TimeChargeDetailsFragment)activity.getChargePagerAdapter().getTimeListDetailsFragment().getDetailsFragment();
@@ -39,34 +39,38 @@ public class TimeChargeViewData extends SuperViewData{
         try{
             String primary = fragment.getEtPrimary().getText().toString();
             String price = fragment.getEtPrice().getText().toString();
+
+
+            String[] time = primary.split(":");
+            if(time.length != 2 || time[0].length() > 2 || time[1].length() != 2){
+                throw new NumberFormatException();
+            }
+            int minutes = Integer.parseInt(time[1]);
+            int hours = Integer.parseInt(time[0]);
+            if(hours > 23 || hours < 0 || minutes > 59 || minutes < 0){
+                throw new NumberFormatException();
+            }
+
+            long timeInSeconds = hours * 60 * 60 + (minutes - minutes%5)*60;
+
             //Get the charge date
             LocalDate date = LocalDate.now();
-            charge = new TimeCharge(Double.parseDouble(String.format(Locale.US, "%s", price)), date, null, LocalTime.ofSecondOfDay(Long.parseLong(primary)));
-        }catch(NullPointerException | NumberFormatException e){
+            charge = new TimeCharge(Double.parseDouble(String.format(Locale.US, "%s", price)), date, null, LocalTime.ofSecondOfDay(timeInSeconds));
+        }catch(NullPointerException e){
             if(fragment.getEtPrimary().getText().toString().equals("")){
                 Toast.makeText(activity, "Er is geen tijd ingevoerd", Toast.LENGTH_SHORT).show();
             }else{
                 Toast.makeText(activity, "Er is geen prijs ingevoerd", Toast.LENGTH_SHORT).show();
             }
             return;
-        }
-
-        //If the data is new and it is not a update check if the key is already present in the datamodel to prevent a UNIQUE constraint
-        if(fragment.getBtnDelete().getVisibility() == View.INVISIBLE && activity.getTimeCharges().hasPrimary(charge) != null ){
-
-            //Get the index of the charge that needs to be updated
-            int index = activity.getTimeCharges().getBinaryIndex(charge, 0);
-
-            //Get the charge from the datamodel
-            TimeCharge oldCharge = activity.getTimeCharges().getCharges().get(index);
-
-            //Query the database to update the charge
-            endTimeCharge(oldCharge);
+        }catch(NumberFormatException e){
+            Toast.makeText(activity, "De ingevoerde tijd of prijs is incorrect", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         //Insert the data into the database
         if(activity.getTimeCharges().getBinaryIndex(charge, 1) == null){
-            NewTimeChargeTask timeChargeTask = new NewTimeChargeTask(activity, charge);
+            NewTimeChargeTask timeChargeTask = new NewTimeChargeTask(activity, charge, oldCharge);
             timeChargeTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
         }
     }
@@ -92,39 +96,51 @@ public class TimeChargeViewData extends SuperViewData{
     /**
      * Query the database to insert a new record and update the model object
      */
-    private static class NewTimeChargeTask extends DatabaseSyncTask<Void> {
+    private static class NewTimeChargeTask extends DatabaseSyncTask<Boolean> {
 
         private TimeCharge timeCharge;
+        private TimeCharge oldCharge;
 
         /**
          * Set up the nessacary data to compelete the query
          * @param activity the activity that is currently displayed
          * @param timeCharge the timecharge that should be updated
          */
-        NewTimeChargeTask(ChargeActivity activity, TimeCharge timeCharge) {
+        NewTimeChargeTask(ChargeActivity activity, TimeCharge timeCharge, TimeCharge oldCharge) {
             super(activity);
             this.timeCharge = timeCharge;
+            this.oldCharge = oldCharge;
         }
 
         /**
          * Execute the query
          * @param params Not used
-         * @return null, the query doesn't provide feedback
+         * @return check if the record already exists
          */
         @Override
-        protected Void doInBackground(Void... params) {
-            AppDatabase.getInstance(weakActivity.get()).timeChargeDao().insert(timeCharge);
-            return null;
+        protected Boolean doInBackground(Void... params) {
+            try{
+                AppDatabase.getInstance(weakActivity.get()).timeChargeDao().insert(timeCharge);
+            }catch(SQLiteConstraintException e){
+                return false;
+            }
+
+            return true;
         }
 
         /**
          * Update the data in the list view based on the query result
-         * @param empty null, query doesn't provide feedback
+         * @param success check if the record already exists
          */
         @Override
-        protected void onPostExecute(Void empty) {
+        protected void onPostExecute(Boolean success) {
             //Check if the activity is still displayed
-            if(activityIsActive()) {
+            if(activityIsActive() && success) {
+                if(oldCharge != null) {
+                    UpdateTimeChargeTask updateTimeChargeTask = new UpdateTimeChargeTask((ChargeActivity) weakActivity.get(), oldCharge);
+                    updateTimeChargeTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+                }else{
+
                 //display the listview instead of the detail view
                 ((ChargeActivity)weakActivity.get()).getChargePagerAdapter().getTimeListDetailsFragment().showListView();
 
@@ -136,6 +152,9 @@ public class TimeChargeViewData extends SuperViewData{
 
                 //Display feedback to the user
                 Toast.makeText(weakActivity.get().getApplicationContext(), "Toeslag opgeslagen.", Toast.LENGTH_SHORT).show();
+                }
+            }else if(activityIsActive() && !success){
+                Toast.makeText(weakActivity.get().getApplicationContext(), "Deze toeslag is vandaag al aangepast", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -220,11 +239,13 @@ public class TimeChargeViewData extends SuperViewData{
                 try{
                     //Update the datamodel to reflect he changes
                     ((ChargeActivity)weakActivity.get()).getTimeCharges().update(timeCharge);
+
+                    //Notify the adapter that the dataset has been updated
+                    ((ChargeActivity)weakActivity.get()).getChargePagerAdapter().getTimeListDetailsFragment().getListFragment().getAdapter().notifyDataSetChanged();
                 }catch(NullPointerException e){
                     //the datamodel is corrupt, so it should be reloaded
                     TimeChargeViewData.LoadTimeChargesTask loadTimeChargesTask = new  TimeChargeViewData.LoadTimeChargesTask((ChargeActivity)weakActivity.get());
                     loadTimeChargesTask.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
-                    return;
                 }catch(Exception e){
                     Toast.makeText(weakActivity.get(), "Er is een probleem opgetreden, probeer het later nog eens", Toast.LENGTH_LONG).show();
                     return;
@@ -233,11 +254,8 @@ public class TimeChargeViewData extends SuperViewData{
                 //Close the details view and return to the listview
                 ((ChargeActivity)weakActivity.get()).getChargePagerAdapter().getTimeListDetailsFragment().showListView();
 
-                //Notify the adapter that the dataset has been updated
-                ((ChargeActivity)weakActivity.get()).getChargePagerAdapter().getTimeListDetailsFragment().getListFragment().getAdapter().notifyDataSetChanged();
-
                 //Display feedback to the user
-                Toast.makeText(weakActivity.get().getApplicationContext(), "Toeslag Verwijderd.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(weakActivity.get().getApplicationContext(), "Toeslag Opgeslagen.", Toast.LENGTH_SHORT).show();
 
             }
         }

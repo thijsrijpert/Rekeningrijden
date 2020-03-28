@@ -36,10 +36,7 @@ public class TimeChargeDetailsFragment extends ChargeDetailsFragment {
 
         TimeChargeViewData timeChargeViewData = new TimeChargeViewData(getActivity());
         btnUpdate.setOnClickListener((viewInner)->{
-            if(charge != null){
-                timeChargeViewData.endTimeCharge((TimeCharge)charge);
-            }
-            timeChargeViewData.newTimeCharge();
+            timeChargeViewData.newTimeCharge((TimeCharge)charge);
         });
         btnDelete.setOnClickListener(viewInner -> timeChargeViewData.endTimeCharge((TimeCharge)charge));
 
@@ -57,7 +54,8 @@ public class TimeChargeDetailsFragment extends ChargeDetailsFragment {
             charge = (DefaultCharge) getArguments().getSerializable("Item");
             if(charge != null){
                 etPrimary.setText(((TimeCharge)charge).getTime().toString());
-                etPrice.setText(String.format(Locale.US, "%f", charge.getPrice()));
+                etPrice.setText(String.format(Locale.US, "%.2f", charge.getPrice()));
+                etPrimary.setEnabled(false);
             }else{
                 btnDelete.setVisibility(View.INVISIBLE);
             }

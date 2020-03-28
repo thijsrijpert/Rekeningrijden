@@ -58,7 +58,7 @@ public class RideOverviewAdapter extends ListAdapter<RideOverviewAdapter.RideVie
         void bind(Ride ride, OnItemClickListener listener){
             startLocation.setText(getLocationName(ride.getStartlocation()));
             date.setText(ride.getDate().toString());
-            price.setText("2");
+            price.setText("Prijs: Onbekend");
             if(ride.getStoplocation() != null){
                 stopLocation.setText(getLocationName(ride.getStoplocation()));
             }

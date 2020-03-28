@@ -89,6 +89,15 @@ public class RideOverviewDetailsFragment extends DetailsFragment {
         distance = -1;
     }
 
+
+    public TextView getTveStartTime() {
+        return tveStartTime;
+    }
+
+    public TextView getTveStopTime() {
+        return tveStopTime;
+    }
+
     public TextView getTveLocationCharge() {
         return tveLocationCharge;
     }

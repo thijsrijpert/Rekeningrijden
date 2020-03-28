@@ -6,7 +6,7 @@ public class TimeCharges extends Charges<TimeCharge> {
         int left = 0;
         int middle = -1;
         int right = charges.size();
-        while(middle != left && middle != right){
+        while(middle != left && middle != right && left < right){
             middle = left + (right - left)/2;
             TimeCharge t = charges.get(middle);
             if(t.getTime().equals(c.getTime())){
