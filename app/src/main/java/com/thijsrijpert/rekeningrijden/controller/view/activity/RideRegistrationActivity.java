@@ -2,6 +2,7 @@ package com.thijsrijpert.rekeningrijden.controller.view.activity;
 
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.Spinner;
 
 import com.thijsrijpert.rekeningrijden.R;
 import com.thijsrijpert.rekeningrijden.controller.PreferencesManager;
@@ -11,6 +12,9 @@ import com.thijsrijpert.rekeningrijden.controller.viewdata.RideViewData;
 public class RideRegistrationActivity extends SuperActivity {
 
 	private Button btnRideRegistration;
+	private Spinner spRideCar;
+	private RideViewData rideViewData;
+	private CarViewData carViewData;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -20,22 +24,25 @@ public class RideRegistrationActivity extends SuperActivity {
 
 		btnRideRegistration = findViewById(R.id.btnRideRegistration);
 
-		btnRideRegistration.setOnClickListener((event) -> {
-			RideViewData rideViewData = new RideViewData();
-			rideViewData.registration(this);
-		});
+		rideViewData = new RideViewData(this);
+
+		spRideCar = findViewById(R.id.spRideCar);
+
+		carViewData = new CarViewData(this);
+
+		btnRideRegistration.setOnClickListener(view -> rideViewData.registration());
 
 	}
 
 	public void onStart() {
 		super.onStart();
-		CarViewData carViewData = new CarViewData();
-		carViewData.loadAllUserCars(this, R.id.spRideCar);
+
+		carViewData.loadAllUserCars(R.id.spRideCar);
 
 		if(!PreferencesManager.getInstance(this).ridePrefExists()){
-			btnRideRegistration.setText("Starten");
+			btnRideRegistration.setText(R.string.btnDriverStart);
 		}else{
-			btnRideRegistration.setText("Stoppen");
+			btnRideRegistration.setText(R.string.btnDriverStop);
 		}
 	}
 
@@ -49,11 +56,19 @@ public class RideRegistrationActivity extends SuperActivity {
 
 	public void onStop() {
 		super.onStop();
+
+		btnRideRegistration.setText(R.string.btnDriverStart);
 	}
 
 	public void onDestory() {
 		super.onDestroy();
 	}
 
+	public Button getBtnRideRegistration() {
+		return btnRideRegistration;
+	}
 
+	public Spinner getSpRideCar() {
+		return spRideCar;
+	}
 }

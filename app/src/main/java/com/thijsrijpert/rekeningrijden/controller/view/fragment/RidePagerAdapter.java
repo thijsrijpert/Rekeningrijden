@@ -31,10 +31,8 @@ public class RidePagerAdapter extends FragmentPagerAdapter {
                 return listDetailsFragment;
             case 1:
                 return rideYearTotalFragment;
-            case 2:
-                return rideSearchFragment;
             default:
-                return null;
+                return rideSearchFragment;
         }
     }
 

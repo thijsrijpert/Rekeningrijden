@@ -19,6 +19,7 @@
 
 
     <EditText
+        android:labelFor="@id/tvChargePrimary"
         android:id="@+id/etChargePrimary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -42,6 +43,7 @@
 
 
     <EditText
+        android:labelFor="@id/tvChargePrice"
         android:id="@+id/etChargePrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

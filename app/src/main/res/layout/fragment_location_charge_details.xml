@@ -28,6 +28,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvChargePrimary" />
 
     <EditText
+        android:labelFor="@id/tvChargePrimary"
         android:id="@+id/etChargePrimary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -50,6 +51,7 @@
         app:layout_constraintTop_toBottomOf="@+id/tvChargeName" />
 
     <EditText
+        android:labelFor="@id/tvChargeName"
         android:id="@+id/etChargeName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -60,6 +62,7 @@
         app:layout_constraintTop_toTopOf="@+id/tvChargeName" />
 
     <EditText
+        android:labelFor="@id/tvChargePrice"
         android:id="@+id/etChargePrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

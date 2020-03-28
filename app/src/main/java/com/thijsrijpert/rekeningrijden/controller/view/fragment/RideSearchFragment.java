@@ -29,7 +29,7 @@ public class RideSearchFragment extends Fragment {
         Button button = view.findViewById(R.id.btnSearch);
 
         button.setOnClickListener((event) ->{
-            RideViewData rideViewData = new RideViewData();
+            RideViewData rideViewData = new RideViewData(this.getActivity());
 
         });
         return view;

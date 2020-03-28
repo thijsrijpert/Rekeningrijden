@@ -155,8 +155,8 @@ public class SuperActivity extends AppCompatActivity {
                     return;
                 }
             }
-            RideViewData rideViewData = new RideViewData();
-            rideViewData.registration((RideRegistrationActivity)this);
+            RideViewData rideViewData = new RideViewData(this);
+            rideViewData.registration();
         } else if(requestCode == 2 && grantResults.length == 1) {
             if(grantResults[0] == PackageManager.PERMISSION_DENIED){
                 Toast.makeText(this, "Toegang tot Internet data geweigerd.", Toast.LENGTH_SHORT).show();

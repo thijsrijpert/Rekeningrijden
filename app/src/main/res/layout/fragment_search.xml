@@ -63,6 +63,7 @@
         app:layout_constraintTop_toBottomOf="@+id/spSearchStopLocation"/>
 
     <EditText
+        android:labelFor="@id/tvSearchDate"
         android:id="@+id/etSearchDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -76,6 +77,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
+        android:labelFor="@id/tvSearchMinPrice"
         android:id="@+id/etSearchMinPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -88,6 +90,7 @@
         app:layout_constraintTop_toBottomOf="@id/etSearchDate" />
 
     <EditText
+        android:labelFor="@id/tvSearchMaxPrice"
         android:id="@+id/etSearchMaxPrice"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

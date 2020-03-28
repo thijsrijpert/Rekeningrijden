@@ -62,9 +62,7 @@ public class LocationChargeAdapter extends ListAdapter<LocationChargeAdapter.Loc
                 chargeLocation.setText(String.format(Locale.getDefault(), "%s ( %s )",getLocationName(charge.getLocation()), charge.getLocation()));
                 chargeLocationPrice.setText(String.format(Locale.US,"%.2f",charge.getPrice()));
 
-                itemView.setOnClickListener((view) ->{
-                    listener.onItemClick(charge);
-                });
+                itemView.setOnClickListener((view) -> listener.onItemClick(charge));
             }else{
                 LinearLayout.LayoutParams layoutParamsPrice = (LinearLayout.LayoutParams)chargeLocationPrice.getLayoutParams();
                 layoutParamsPrice.setMargins(0,0,0,0);

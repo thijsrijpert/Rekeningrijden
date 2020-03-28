@@ -31,10 +31,8 @@ public class ChargePagerAdapter extends FragmentPagerAdapter {
                 return locationListDetailsFragment;
             case 1:
                 return timeListDetailsFragment;
-            case 2:
-                return defaultChargeFragment;
             default:
-                return null;
+                return defaultChargeFragment;
         }
     }
 

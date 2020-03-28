@@ -60,9 +60,7 @@ public class TimeChargeAdapter extends ListAdapter<TimeChargeAdapter.TimeChargeV
                 chargeTime.setText(charge.getTime().toString());
                 chargeTimePrice.setText(String.format(Locale.getDefault(), "%.2f",charge.getPrice()));
 
-                view.setOnClickListener((view) -> {
-                    listener.onItemClick(charge);
-                });
+                view.setOnClickListener((view) -> listener.onItemClick(charge));
             }
         }
     }

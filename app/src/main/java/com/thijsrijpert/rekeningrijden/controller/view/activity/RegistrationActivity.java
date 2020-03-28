@@ -29,10 +29,9 @@ public class RegistrationActivity extends SuperActivity {
 
 		Button btnRegistration = findViewById(R.id.btnRegistrationRegister);
 
-		btnRegistration.setOnClickListener((view) -> {
-			UserViewData userViewData = new UserViewData();
-			userViewData.register(this);
-		});
+		UserViewData userViewData = new UserViewData(this);
+
+		btnRegistration.setOnClickListener(view -> userViewData.register());
 	}
 
 	public void onStart() {
@@ -63,6 +62,15 @@ public class RegistrationActivity extends SuperActivity {
 
 	public void onStop() {
 		super.onStop();
+
+		etName.setText("");
+		etPassword.setText("");
+		etZipcode.setText("");
+		etHomenumber.setText("");
+		etPhonenumber.setText("");
+
+		etUsername.setText("");
+		etUsername.setEnabled(true);
 	}
 
 	public void onDestory() {

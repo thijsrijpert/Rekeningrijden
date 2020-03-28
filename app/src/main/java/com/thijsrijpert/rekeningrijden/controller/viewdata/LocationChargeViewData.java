@@ -1,5 +1,6 @@
 package com.thijsrijpert.rekeningrijden.controller.viewdata;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.Toast;
@@ -19,10 +20,18 @@ import java.util.Locale;
 public class LocationChargeViewData extends SuperViewData {
 
     /**
-     * Add a new location charge to the database and data model
-     * @param activity the activity that is currently displayed
+     * Create a new ViewData object for locationCharge to interact with the db
+     * @param activity the current displayed activity
      */
-    public void newLocationCharge(ChargeActivity activity){
+    public LocationChargeViewData(Activity activity){
+        this.activity = activity;
+    }
+
+    /**
+     * Add a new location charge to the database and data model
+     */
+    public void newLocationCharge(){
+        ChargeActivity activity = (ChargeActivity)this.activity;
         //Get the displayed fragment from the UI
         LocationChargeDetailsFragment fragment = (LocationChargeDetailsFragment)activity.getChargePagerAdapter().getLocationListDetailsFragment().getDetailsFragment();
         LocationCharge charge;
@@ -56,7 +65,7 @@ public class LocationChargeViewData extends SuperViewData {
             LocationCharge oldCharge = activity.getLocationCharges().getCharges().get(index);
 
             //Query the database to update the charge
-            endLocationCharge(activity, oldCharge);
+            endLocationCharge(oldCharge);
         }
 
         //Add the new record to the database
@@ -69,25 +78,23 @@ public class LocationChargeViewData extends SuperViewData {
 
     /**
      * Load all records from the database into the datamodel
-     * @param activity the activity that is currently displayed
      */
-    public void loadAllLocationCharges(ChargeActivity activity){
+    public void loadAllLocationCharges(){
         //Load all LocationCharges from the database
-        LoadLocationChargesTask loadLocationChargesTask = new LoadLocationChargesTask(activity);
+        LoadLocationChargesTask loadLocationChargesTask = new LoadLocationChargesTask((ChargeActivity)activity);
         loadLocationChargesTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     /**
      * Update the locationCharge in the database and datamodel to include an enddate
-     * @param activity the activity that is currently displayed
      * @param locationCharge the locationcharge that needs to be changed
      */
-    public void endLocationCharge(ChargeActivity activity, LocationCharge locationCharge){
+    public void endLocationCharge(LocationCharge locationCharge){
         //look up the current enddate and add it to the charge
         locationCharge.setEnddate(LocalDate.now());
 
         //Change the record in the database
-        UpdateLocationChargeTask updateLocationChargeTask = new UpdateLocationChargeTask(activity, locationCharge);
+        UpdateLocationChargeTask updateLocationChargeTask = new UpdateLocationChargeTask((ChargeActivity)activity, locationCharge);
         updateLocationChargeTask.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR);
     }
 

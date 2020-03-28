@@ -75,6 +75,7 @@
         app:layout_constraintTop_toTopOf="@+id/spCarType" />
 
     <EditText
+        android:labelFor="@+id/tvCarNumberplate"
         android:id="@+id/etCarNumberplate"
         android:layout_width="150dp"
         android:layout_height="wrap_content"

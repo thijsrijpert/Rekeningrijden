@@ -21,21 +21,21 @@ import java.util.List;
 
 public class CarViewData extends SuperViewData{
 
-    public void addCar(CarActivity activity){
+    public CarViewData(Activity activity){
         this.activity = activity;
+    }
 
+    public void addCar(){
         Car car = getCarObject();
 
-        AddCarTask addCarTask = new AddCarTask(activity, car);
+        AddCarTask addCarTask = new AddCarTask((CarActivity)activity, car);
         addCarTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    public void updateCar(CarActivity activity){
-        this.activity = activity;
-
+    public void updateCar(){
         Car car = getCarObject();
 
-        UpdateCarTask updateCarTask = new UpdateCarTask(activity, car);
+        UpdateCarTask updateCarTask = new UpdateCarTask((CarActivity)activity, car);
         updateCarTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
@@ -52,9 +52,7 @@ public class CarViewData extends SuperViewData{
     }
 
 
-    public void loadAllUserCars(Activity activity, int resourceId){
-        this.activity = activity;
-
+    public void loadAllUserCars(int resourceId){
         User user = PreferencesManager.getInstance(activity).getUserPref();
 
         LoadCarsTask loadCarsTask = new LoadCarsTask(activity, user, resourceId );

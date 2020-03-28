@@ -20,6 +20,8 @@ public class RideOverviewDetailsFragment extends DetailsFragment {
 
     private TextView tveStartLocation, tveStopLocation, tveStartTime, tveStopTime, tveDate, tveLocationCharge, tveTimeCharge, tveDistance, tveCosts;
     private RideViewData rideViewData;
+    private Double defaultCharge;
+    private Integer distance = -1;
 
     public void onCreate(Bundle savedInstanceState){
         super.onCreate(savedInstanceState);
@@ -46,9 +48,9 @@ public class RideOverviewDetailsFragment extends DetailsFragment {
                 tveStopLocation.setText(ride.getStoplocation());
                 tveStartTime.setText(ride.getStarttime().toString());
                 tveDate.setText(ride.getDate().toString());
-                rideViewData = new RideViewData();
-                rideViewData.loadDistance(ride, getActivity());
-                rideViewData.loadCharge(ride, getActivity());
+                rideViewData = new RideViewData(getActivity());
+                rideViewData.loadDistance(ride);
+                rideViewData.loadCharge(ride);
                 if(ride.getStoptime() != null){
                     tveStopTime.setText(ride.getStoptime().toString());
                 }
@@ -97,5 +99,21 @@ public class RideOverviewDetailsFragment extends DetailsFragment {
 
     public RideViewData getRideViewData() {
         return rideViewData;
+    }
+
+    public Double getDefaultCharge() {
+        return defaultCharge;
+    }
+
+    public void setDefaultCharge(Double defaultCharge) {
+        this.defaultCharge = defaultCharge;
+    }
+
+    public Integer getDistance() {
+        return distance;
+    }
+
+    public void setDistance(Integer distance) {
+        this.distance = distance;
     }
 }

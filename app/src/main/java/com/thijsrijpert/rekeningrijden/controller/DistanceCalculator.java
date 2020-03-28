@@ -8,6 +8,8 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.thijsrijpert.rekeningrijden.controller.view.activity.RideOverviewActivity;
+import com.thijsrijpert.rekeningrijden.controller.view.fragment.RideOverviewDetailsFragment;
 import com.thijsrijpert.rekeningrijden.controller.viewdata.RideViewData;
 import com.thijsrijpert.rekeningrijden.model.Ride;
 
@@ -25,6 +27,8 @@ public class DistanceCalculator {
 
     public void calculate(Ride ride, RideViewData viewData)  {
 
+        RideOverviewDetailsFragment fragment = (RideOverviewDetailsFragment) ((RideOverviewActivity)viewData.getActivity()).getRidePagerAdapter().getListDetailsFragment().getDetailsFragment();
+
         try {
             if(ride.getStoplocation() == null){
                 throw new NullPointerException();
@@ -38,27 +42,26 @@ public class DistanceCalculator {
 
             StringRequest stringRequest = new StringRequest(Request.Method.GET, request, response -> {
                 try {
-                    System.out.println(response);
                     JsonObject json = jsonParser.parse(response).getAsJsonObject();
                     JsonObject features = json.getAsJsonArray("features").get(0).getAsJsonObject();
                     JsonObject properties = features.getAsJsonObject("properties");
                     JsonObject segments = properties.getAsJsonArray("segments").get(0).getAsJsonObject();
-                    viewData.setDistance(segments.get("distance").getAsInt());
-                    viewData.loadDistance(ride, activity);
+                    fragment.setDistance(segments.get("distance").getAsInt());
+                    viewData.loadDistance(ride);
                 }catch(NullPointerException e){
-                    viewData.setDistance(-1);
-                    viewData.loadDistance(ride, activity);
+                    fragment.setDistance(-2);
+                    viewData.loadDistance(ride);
                     e.printStackTrace();
                 }
             }, error -> {
-                viewData.setDistance(-1);
-                viewData.loadDistance(ride, activity);
+                fragment.setDistance(-2);
+                viewData.loadDistance(ride);
                 System.out.println(error.toString());
             });
             queue.add(stringRequest);
         }catch(NullPointerException e){
-            viewData.setDistance(-1);
-            viewData.loadDistance(ride, activity);
+            fragment.setDistance(-2);
+            viewData.loadDistance(ride);
             e.printStackTrace();
         }
 

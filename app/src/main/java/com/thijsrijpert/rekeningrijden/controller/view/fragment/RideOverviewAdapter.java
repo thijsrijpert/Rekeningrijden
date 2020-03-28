@@ -62,9 +62,7 @@ public class RideOverviewAdapter extends ListAdapter<RideOverviewAdapter.RideVie
                 date.setText(ride.getDate().toString());
                 price.setText("2");
             }
-            itemView.setOnClickListener((view) -> {
-                listener.onItemClick(ride);
-            });
+            itemView.setOnClickListener((view) -> listener.onItemClick(ride));
 
         }
 

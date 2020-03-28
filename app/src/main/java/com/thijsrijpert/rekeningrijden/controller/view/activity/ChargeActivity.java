@@ -40,11 +40,11 @@ public class ChargeActivity extends OverviewActivity {
 		timeCharges = new TimeCharges();
 		locationCharges = new LocationCharges();
 
-		LocationChargeViewData locationChargeViewData = new LocationChargeViewData();
-		locationChargeViewData.loadAllLocationCharges(this);
+		LocationChargeViewData locationChargeViewData = new LocationChargeViewData(this);
+		locationChargeViewData.loadAllLocationCharges();
 
-		TimeChargeViewData timeChargeViewData = new TimeChargeViewData();
-		timeChargeViewData.loadAllTimeCharges(this);
+		TimeChargeViewData timeChargeViewData = new TimeChargeViewData(this);
+		timeChargeViewData.loadAllTimeCharges();
 	}
 
 	public void onResume() {

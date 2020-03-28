@@ -31,6 +31,7 @@
         app:layout_constraintStart_toStartOf="@+id/etName" />
 
     <EditText
+        android:labelFor="@+id/tvName"
         android:id="@+id/etName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -51,6 +52,7 @@
         app:layout_constraintTop_toBottomOf="@+id/etName" />
 
     <EditText
+        android:labelFor="@id/tvPassword"
         android:id="@+id/etPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -1,6 +1,8 @@
 package com.thijsrijpert.rekeningrijden.controller.viewdata;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.database.sqlite.SQLiteConstraintException;
 import android.os.AsyncTask;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -19,16 +21,21 @@ import com.thijsrijpert.rekeningrijden.R;
 
 public class UserViewData extends SuperViewData {
 
-    public void login(LoginActivity activity){
+    public UserViewData(Activity activity){
+        this.activity = activity;
+    }
+
+    public void login(){
         String name = ((EditText)activity.findViewById(R.id.etName)).getText().toString();
         String password = ((EditText)activity.findViewById(R.id.etPassword)).getText().toString();
         User user = new User(name);
         user.setPassword(password);
-        LoginTask loginTask = new LoginTask(activity, user);
+        LoginTask loginTask = new LoginTask((LoginActivity)activity, user);
         loginTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
-    public void register(RegistrationActivity activity){
+    public void register(){
+        RegistrationActivity activity = (RegistrationActivity)this.activity;
 
         String name = activity.getEtName().getText().toString();
         String username = activity.getEtUsername().getText().toString();
@@ -61,27 +68,26 @@ public class UserViewData extends SuperViewData {
 
         @Override
         protected void onPostExecute(User user) {
-            if(weakActivity.get() == null) {
-                return;
-            }
-            if(user == null){
-                Toast.makeText(weakActivity.get().getApplicationContext(), "Inloggegevens onjuist.", Toast.LENGTH_LONG).show();
-            }else{
-                PreferencesManager.getInstance(weakActivity.get()).storeObjectInPref("User", user);
-
-                Intent intent;
-                if(user.getRole().getRole().equals("Admin")){
-                    intent = new Intent(weakActivity.get().getApplicationContext(), ChargeActivity.class);
+            if(activityIsActive()) {
+                if(user == null){
+                    Toast.makeText(weakActivity.get().getApplicationContext(), "Inloggegevens onjuist.", Toast.LENGTH_LONG).show();
                 }else{
-                    intent = new Intent(weakActivity.get().getApplicationContext(), RideRegistrationActivity.class);
-                }
+                    PreferencesManager.getInstance(weakActivity.get()).storeObjectInPref("User", user);
 
-                weakActivity.get().startActivity(intent);
+                    Intent intent;
+                    if(user.getRole().getRole().equals("Admin")){
+                        intent = new Intent(weakActivity.get().getApplicationContext(), ChargeActivity.class);
+                    }else{
+                        intent = new Intent(weakActivity.get().getApplicationContext(), RideRegistrationActivity.class);
+                    }
+
+                    weakActivity.get().startActivity(intent);
+                }
             }
         }
     }
 
-    private static class RegistrationTask extends DatabaseSyncTask<Void> {
+    private static class RegistrationTask extends DatabaseSyncTask<Boolean> {
         private User user;
 
         RegistrationTask(RegistrationActivity activity, User user) {
@@ -90,26 +96,31 @@ public class UserViewData extends SuperViewData {
         }
 
         @Override
-        protected Void doInBackground(Void... params) {
+        protected Boolean doInBackground(Void... params) {
             UserDao userDao = AppDatabase.getInstance(weakActivity.get().getApplicationContext()).userDao();
             if(PreferencesManager.getInstance(weakActivity.get()).userPrefExists()){
                 userDao.update(user);
             }else{
-                userDao.insert(user);
+                try{
+                    userDao.insert(user);
+                }catch(SQLiteConstraintException e){
+                    return false;
+                }
+
             }
-            return null;
+            return true;
         }
 
         @Override
-        protected void onPostExecute(Void empty) {
-            if(weakActivity.get() == null) {
-                return;
+        protected void onPostExecute(Boolean success) {
+            if(activityIsActive() && success) {
+                PreferencesManager.getInstance(weakActivity.get()).storeObjectInPref("User", user);
+
+                Intent intent = new Intent(weakActivity.get().getApplicationContext(), CarActivity.class);
+                weakActivity.get().startActivity(intent);
+            }else if(!success){
+                Toast.makeText(weakActivity.get().getApplicationContext(), "Deze gebruikersnaam bestaat al", Toast.LENGTH_SHORT).show();
             }
-
-            PreferencesManager.getInstance(weakActivity.get()).storeObjectInPref("User", user);
-
-            Intent intent = new Intent(weakActivity.get().getApplicationContext(), CarActivity.class);
-            weakActivity.get().startActivity(intent);
         }
     }
 }

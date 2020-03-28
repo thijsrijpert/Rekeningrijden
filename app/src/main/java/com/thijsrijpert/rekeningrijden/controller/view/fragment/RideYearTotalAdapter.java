@@ -43,8 +43,8 @@ public class RideYearTotalAdapter extends RecyclerView.Adapter<RideYearTotalAdap
 
         private ViewHolder(View view) {
             super(view);
-            date = (TextView) view.findViewById(R.id.tvRideYearTotalDate);
-            price = (TextView) view.findViewById(R.id.tvRideYearTotalPrice);
+            date = view.findViewById(R.id.tvRideYearTotalDate);
+            price = view.findViewById(R.id.tvRideYearTotalPrice);
         }
 
         private void bind(Ride ride){

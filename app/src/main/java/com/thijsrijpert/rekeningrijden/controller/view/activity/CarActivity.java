@@ -36,13 +36,13 @@ public class CarActivity extends SuperActivity {
 		btnAdd = findViewById(R.id.btnCarUpdate);
 		spCarSearchNumberplate = findViewById(R.id.spCarSearchNumberplate);
 
-		carViewData = new CarViewData();
+		carViewData = new CarViewData(this);
 
 		btnAdd.setOnClickListener((view) -> {
 			if(etNumberplate.isEnabled()){
-				carViewData.addCar(this);
+				carViewData.addCar();
 			}else{
-				carViewData.updateCar(this);
+				carViewData.updateCar();
 			}
 		});
 
@@ -83,7 +83,7 @@ public class CarActivity extends SuperActivity {
 				this, R.layout.support_simple_spinner_dropdown_item, types.getTypes()
 		);
 
-		carViewData.loadAllUserCars(this, R.id.spCarSearchNumberplate);
+		carViewData.loadAllUserCars(R.id.spCarSearchNumberplate);
 
 		spBrands.setAdapter(adapterBrands);
 		spTypes.setAdapter(adapterTypes);

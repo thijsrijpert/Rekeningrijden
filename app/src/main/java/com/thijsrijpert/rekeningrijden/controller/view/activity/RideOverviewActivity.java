@@ -12,6 +12,7 @@ import com.thijsrijpert.rekeningrijden.R;
 public class RideOverviewActivity extends OverviewActivity{
 
 	private RidePagerAdapter ridePagerAdapter;
+	RideViewData rideViewData;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -24,6 +25,8 @@ public class RideOverviewActivity extends OverviewActivity{
 		TabLayout tabLayout = findViewById(R.id.tabsRide);
 		ridePagerAdapter = new RidePagerAdapter(getSupportFragmentManager(), this.getBaseContext());
 
+		rideViewData = new RideViewData(this);
+
 		super.activateViewPager(pager, tabLayout, ridePagerAdapter);
 
 	}
@@ -31,8 +34,7 @@ public class RideOverviewActivity extends OverviewActivity{
 	public void onStart() {
 		super.onStart();
 
-		RideViewData rideViewData = new RideViewData();
-		rideViewData.loadAllRides(this);
+		rideViewData.loadAllRides();
 	}
 
 	public void onResume() {

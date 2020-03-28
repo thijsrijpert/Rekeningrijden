@@ -11,15 +11,15 @@ import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 
-import com.thijsrijpert.rekeningrijden.controller.view.activity.ChargeActivity;
+import com.thijsrijpert.rekeningrijden.R;
 import com.thijsrijpert.rekeningrijden.controller.viewdata.LocationChargeViewData;
 import com.thijsrijpert.rekeningrijden.model.DefaultCharge;
 import com.thijsrijpert.rekeningrijden.model.LocationCharge;
-import com.thijsrijpert.rekeningrijden.R;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 public class LocationChargeDetailsFragment extends TimeChargeDetailsFragment {
 
@@ -37,21 +37,15 @@ public class LocationChargeDetailsFragment extends TimeChargeDetailsFragment {
 
         etName.setEnabled(false);
 
-        LocationChargeViewData locationChargeViewData = new LocationChargeViewData();
+        LocationChargeViewData locationChargeViewData = new LocationChargeViewData(getActivity());
 
-        btnUpdate.setOnClickListener((viewInner)->{
-            if(getActivity() != null){
-                if(charge != null){
-                    locationChargeViewData.endLocationCharge((ChargeActivity)getActivity(), (LocationCharge)charge);
-                }
-                locationChargeViewData.newLocationCharge((ChargeActivity)getActivity());
+        btnUpdate.setOnClickListener(viewInner ->{
+            if(charge != null){
+                locationChargeViewData.endLocationCharge((LocationCharge)charge);
             }
+            locationChargeViewData.newLocationCharge();
         });
-        btnDelete.setOnClickListener((viewInner)->{
-            if(getActivity() != null){
-                locationChargeViewData.endLocationCharge((ChargeActivity)getActivity(), (LocationCharge)charge);
-            }
-        });
+        btnDelete.setOnClickListener(viewInner -> locationChargeViewData.endLocationCharge((LocationCharge)charge));
         return view;
     }
 
@@ -98,8 +92,8 @@ public class LocationChargeDetailsFragment extends TimeChargeDetailsFragment {
 
     private String getLocationName(@NonNull String coordinate){
         Geocoder geocoder = new Geocoder(this.getContext());
+        String[] coordinates = coordinate.split(Objects.requireNonNull(this.getContext()).getString(R.string.coordinateSplitCharacter), 2);
         try {
-            String[] coordinates = coordinate.split(this.getContext().getString(R.string.coordinateSplitCharacter), 2);
             List<Address> list = geocoder.getFromLocation(Double.parseDouble(coordinates[0]), Double.parseDouble(coordinates[1]), 1);
             return list.get(0).getLocality();
         } catch (IOException e) {

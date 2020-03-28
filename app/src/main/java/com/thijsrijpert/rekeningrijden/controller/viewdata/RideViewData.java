@@ -28,20 +28,21 @@ import com.thijsrijpert.rekeningrijden.model.User;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
 public class RideViewData extends SuperViewData{
 
     private Location location;
-    private Integer distance = -2;
     private DistanceCalculator distanceCalculator;
-    private Double defaultCharge;
 
-    public void registration(RideRegistrationActivity activity){
-        super.activity = activity;
-        Button button = activity.findViewById(R.id.btnRideRegistration);
+    public RideViewData(Activity activity){
+        this.activity = activity;
+        this.distanceCalculator = new DistanceCalculator(activity);
+    }
+
+    public void registration(){
+        Button button = ((RideRegistrationActivity)activity).getBtnRideRegistration();
         if(button.getText().equals("Starten")){
             startRegistration();
         }else{
@@ -59,10 +60,10 @@ public class RideViewData extends SuperViewData{
             }
 
             //Get the starttime
-            LocalTime starttime = getCurrentTime();
+            LocalTime starttime = LocalTime.now();
 
             //Get the car
-            Spinner spinner = activity.findViewById(R.id.spRideCar);
+            Spinner spinner = ((RideRegistrationActivity)activity).getSpRideCar();
             Car car = (Car) spinner.getSelectedItem();
 
             //Get the ride date
@@ -91,7 +92,7 @@ public class RideViewData extends SuperViewData{
                 return;
             }
 
-            LocalTime stoptime = getCurrentTime();
+            LocalTime stoptime = LocalTime.now();
 
             Ride ride = PreferencesManager.getInstance(activity).getRidePref();
 
@@ -108,21 +109,15 @@ public class RideViewData extends SuperViewData{
         }
     }
 
-    public void loadAllRides(RideOverviewActivity activity){
-        this.activity = activity;
-
+    public void loadAllRides(){
         User user = PreferencesManager.getInstance(activity).getUserPref();
 
-        LoadAllRidesTask loadAllRidesTask = new LoadAllRidesTask(activity, user);
+        LoadAllRidesTask loadAllRidesTask = new LoadAllRidesTask((RideOverviewActivity)activity, user);
         loadAllRidesTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     private void requeustGPSPermissions(){
         activity.requestPermissions(new String[]{Manifest.permission.ACCESS_FINE_LOCATION,Manifest.permission.ACCESS_COARSE_LOCATION},1 );
-    }
-
-    private void requestInternetPermission(){
-        activity.requestPermissions(new String[]{Manifest.permission.INTERNET},2 );
     }
 
     private void displayGPSErrorMessage(){
@@ -134,77 +129,60 @@ public class RideViewData extends SuperViewData{
             throw new MissingPermissonException();
         }
         FusedLocationProviderClient locationClient = LocationServices.getFusedLocationProviderClient(activity);
+
         locationClient.getLastLocation()
                 .addOnSuccessListener((location) -> {
                     this.location = location;
-                    this.registration((RideRegistrationActivity)activity);
+                    this.registration();
                 })
-                .addOnFailureListener(e -> {
-                    displayGPSErrorMessage();
-                });
+                .addOnFailureListener(e -> displayGPSErrorMessage());
+
     }
 
-    public void loadDistance(Ride ride, Activity activity){
+    public void loadDistance(Ride ride){
+        RideOverviewDetailsFragment fragment = (RideOverviewDetailsFragment) ((RideOverviewActivity) activity)
+                .getRidePagerAdapter().getListDetailsFragment().getDetailsFragment();
 
-        this.activity = activity;
-
-        if(distance == -2){
-            distanceCalculator = new DistanceCalculator(activity);
+        if(fragment.getDistance() == -1){
             distanceCalculator.calculate(ride, this);
-        }else if(distance == -1){
+        }else if(fragment.getDistance() == -2){
             ((RideOverviewDetailsFragment)((RideOverviewActivity)activity)
                     .getRidePagerAdapter().getListDetailsFragment().getDetailsFragment())
-                    .getTveDistance().setText("Afstand kon niet opgehaald worden");
+                    .getTveDistance().setText("n.v.t");
         }else{
             ((RideOverviewDetailsFragment)((RideOverviewActivity)activity)
                     .getRidePagerAdapter().getListDetailsFragment().getDetailsFragment())
-                    .getTveDistance().setText(String.format(Locale.US, "%d", distance / 1000));
+                    .getTveDistance().setText(String.format(Locale.US, "%d", fragment.getDistance() / 1000));
         }
 
         calculateCosts();
     }
 
-    public void loadCharge(Ride ride, Activity activity){
+    public void loadCharge(Ride ride){
         LoadChargesTask loadChargesTask = new LoadChargesTask((RideOverviewActivity)activity, ride);
         loadChargesTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     private void calculateCosts(){
-        TextView locationCharge = ((RideOverviewDetailsFragment)((RideOverviewActivity)activity)
-                .getRidePagerAdapter().getListDetailsFragment().getDetailsFragment())
-                .getTveLocationCharge();
-        TextView timeCharge = ((RideOverviewDetailsFragment)((RideOverviewActivity)activity)
-                .getRidePagerAdapter().getListDetailsFragment().getDetailsFragment())
-                .getTveLocationCharge();
+        RideOverviewDetailsFragment fragment = (RideOverviewDetailsFragment) ((RideOverviewActivity) activity)
+                .getRidePagerAdapter().getListDetailsFragment().getDetailsFragment();
+        TextView costs = fragment.getTveCosts();
+        if(fragment.getDistance() > 0) {
+            TextView locationCharge = fragment.getTveLocationCharge();
+            TextView timeCharge = fragment.getTveLocationCharge();
+            Double defaultCharge = fragment.getDefaultCharge();
+            Integer distance = fragment.getDistance();
 
-        TextView costs = ((RideOverviewDetailsFragment)((RideOverviewActivity)activity)
-                .getRidePagerAdapter().getListDetailsFragment().getDetailsFragment())
-                .getTveCosts();
-        if(locationCharge.length() != 0 && timeCharge.length() != 0 && distance >= 0 && costs.length() == 0){
-            double location = Double.parseDouble(locationCharge.getText().toString());
-            double time = Double.parseDouble(timeCharge.getText().toString());
-            Double charge = (distance/1000 * defaultCharge) + (distance/1000 * time) + (distance/1000 * location);
-            System.out.println(charge.toString());
-            costs.setText(String.format(Locale.US, "%.2f", charge ));
+            if (locationCharge.length() != 0 && timeCharge.length() != 0 && costs.length() == 0) {
+                double location = Double.parseDouble(locationCharge.getText().toString());
+                double time = Double.parseDouble(timeCharge.getText().toString());
+                Double charge = (distance / 1000 * defaultCharge) + (distance / 1000 * time) + (distance / 1000 * location);
+                System.out.println(charge.toString());
+                costs.setText(String.format(Locale.US, "%.2f", charge));
+            }
+        }else if (fragment.getDistance() == -2){
+            costs.setText("n.v.t");
         }
-    }
-
-    private LocalTime getCurrentTime(){
-        Calendar timeNow = Calendar.getInstance();
-        Calendar timeMidnight = Calendar.getInstance();
-
-        System.out.println(timeMidnight.getTimeInMillis() / 1000);
-
-        timeMidnight.set(Calendar.HOUR_OF_DAY, 0);
-        timeMidnight.set(Calendar.MINUTE, 0);
-        timeMidnight.set(Calendar.SECOND, 0);
-        timeMidnight.set(Calendar.MILLISECOND, 0);
-
-        System.out.println(timeMidnight.getTimeInMillis() / 1000);
-
-        System.out.println(timeNow.getTimeInMillis() / 1000 - timeMidnight.getTimeInMillis() / 1000);
-
-        return LocalTime.ofSecondOfDay(timeNow.getTimeInMillis() / 1000 - timeMidnight.getTimeInMillis() / 1000);
     }
 
     private String getCoordinatesString(Location location){
@@ -237,8 +215,8 @@ public class RideViewData extends SuperViewData{
 
             Toast.makeText(weakActivity.get().getApplicationContext(), "Rit is gestart.", Toast.LENGTH_SHORT).show();
 
-            Button button = weakActivity.get().findViewById(R.id.btnRideRegistration);
-            button.setText("Stoppen");
+            Button button = ((RideRegistrationActivity)weakActivity.get()).getBtnRideRegistration();
+            button.setText(R.string.btnDriverStop);
         }
     }
 
@@ -259,17 +237,14 @@ public class RideViewData extends SuperViewData{
 
         @Override
         protected void onPostExecute(Void empty) {
-            if(weakActivity.get() == null) {
-                return;
+            if(activityIsActive()) {
+                PreferencesManager.getInstance(weakActivity.get()).removePref("Ride");
+
+                Toast.makeText(weakActivity.get().getApplicationContext(), "Rit is gestopt.", Toast.LENGTH_SHORT).show();
+
+                Button button = ((RideRegistrationActivity)weakActivity.get()).getBtnRideRegistration();
+                button.setText(R.string.btnDriverStart);
             }
-
-            PreferencesManager.getInstance(weakActivity.get()).removePref("Ride");
-
-
-            Toast.makeText(weakActivity.get().getApplicationContext(), "Rit is gestopt.", Toast.LENGTH_SHORT).show();
-
-            Button button = weakActivity.get().findViewById(R.id.btnRideRegistration);
-            button.setText("Starten");
         }
     }
 
@@ -328,7 +303,7 @@ public class RideViewData extends SuperViewData{
                         .getRidePagerAdapter().getListDetailsFragment().getDetailsFragment())
                         .getTveLocationCharge().setText(String.format(Locale.US, "%.2f", charges[1]));
                 ((RideOverviewDetailsFragment) ((RideOverviewActivity) weakActivity.get()).getRidePagerAdapter()
-                        .getListDetailsFragment().getDetailsFragment()).getRideViewData().setDefaultCharge(charges[2]);
+                        .getListDetailsFragment().getDetailsFragment()).setDefaultCharge(charges[2]);
                 ((RideOverviewDetailsFragment) ((RideOverviewActivity) weakActivity.get()).getRidePagerAdapter()
                         .getListDetailsFragment().getDetailsFragment()).getRideViewData().calculateCosts();
 
@@ -336,13 +311,5 @@ public class RideViewData extends SuperViewData{
 
 
         }
-    }
-
-    public void setDistance(Integer distance) {
-        this.distance = distance;
-    }
-
-    public void setDefaultCharge(Double defaultCharge) {
-        this.defaultCharge = defaultCharge;
     }
 }

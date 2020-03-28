@@ -10,11 +10,10 @@ import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
 
-import com.thijsrijpert.rekeningrijden.controller.view.activity.ChargeActivity;
+import com.thijsrijpert.rekeningrijden.R;
 import com.thijsrijpert.rekeningrijden.controller.viewdata.TimeChargeViewData;
 import com.thijsrijpert.rekeningrijden.model.DefaultCharge;
 import com.thijsrijpert.rekeningrijden.model.TimeCharge;
-import com.thijsrijpert.rekeningrijden.R;
 
 import java.util.Locale;
 
@@ -35,20 +34,14 @@ public class TimeChargeDetailsFragment extends ChargeDetailsFragment {
         View view = inflater.inflate(R.layout.fragment_time_charge_details, container, false);
         findIds(view);
 
-        TimeChargeViewData timeChargeViewData = new TimeChargeViewData();
+        TimeChargeViewData timeChargeViewData = new TimeChargeViewData(getActivity());
         btnUpdate.setOnClickListener((viewInner)->{
-            if(getActivity() != null){
-                if(charge != null){
-                    timeChargeViewData.endTimeCharge((ChargeActivity)getActivity(), (TimeCharge)charge);
-                }
-                timeChargeViewData.newTimeCharge((ChargeActivity)getActivity());
+            if(charge != null){
+                timeChargeViewData.endTimeCharge((TimeCharge)charge);
             }
+            timeChargeViewData.newTimeCharge();
         });
-        btnDelete.setOnClickListener((viewInner)->{
-            if(getActivity() != null){
-                timeChargeViewData.endTimeCharge((ChargeActivity)getActivity(), (TimeCharge)charge);
-            }
-        });
+        btnDelete.setOnClickListener(viewInner -> timeChargeViewData.endTimeCharge((TimeCharge)charge));
 
         return view;
     }

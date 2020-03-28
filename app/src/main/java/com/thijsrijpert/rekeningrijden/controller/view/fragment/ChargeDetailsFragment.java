@@ -10,6 +10,7 @@ import android.widget.EditText;
 
 import androidx.fragment.app.Fragment;
 
+import com.thijsrijpert.rekeningrijden.controller.viewdata.DefaultChargeViewData;
 import com.thijsrijpert.rekeningrijden.model.DefaultCharge;
 import com.thijsrijpert.rekeningrijden.R;
 
@@ -30,6 +31,12 @@ public class ChargeDetailsFragment extends DetailsFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_default_charge_details, container, false);
+        findIds(view);
+        DefaultChargeViewData defaultChargeViewData = new DefaultChargeViewData(getActivity());
+
+        btnUpdate.setOnClickListener(v -> {
+            defaultChargeViewData.newDefaultCharge();
+        });
 
         return view;
     }

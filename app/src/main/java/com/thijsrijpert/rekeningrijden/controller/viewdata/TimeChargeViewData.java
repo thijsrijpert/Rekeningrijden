@@ -1,5 +1,6 @@
 package com.thijsrijpert.rekeningrijden.controller.viewdata;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.view.View;
 import android.widget.Toast;
@@ -17,19 +18,27 @@ import java.util.Locale;
 /**
  * Database UI interaction
  */
-public class TimeChargeViewData {
+public class TimeChargeViewData extends SuperViewData{
+
+    /**
+     * Create an new ViewData object for db interaction
+     * @param activity
+     */
+    public TimeChargeViewData(Activity activity){
+        this.activity = activity;
+    }
 
     /**
      * Create a new time charge database and model object
-     * @param activity the activity that is currently displayed
      */
-    public void newTimeCharge(ChargeActivity activity){
+    public void newTimeCharge(){
+        ChargeActivity activity = (ChargeActivity)this.activity;
         //get the current fragment
         TimeChargeDetailsFragment fragment = (TimeChargeDetailsFragment)activity.getChargePagerAdapter().getTimeListDetailsFragment().getDetailsFragment();
         TimeCharge charge;
         try{
             String primary = fragment.getEtPrimary().getText().toString();
-            String price = fragment.getEtPrimary().getText().toString();
+            String price = fragment.getEtPrice().getText().toString();
             //Get the charge date
             LocalDate date = LocalDate.now();
             charge = new TimeCharge(Double.parseDouble(String.format(Locale.US, "%s", price)), date, null, LocalTime.ofSecondOfDay(Long.parseLong(primary)));
@@ -52,7 +61,7 @@ public class TimeChargeViewData {
             TimeCharge oldCharge = activity.getTimeCharges().getCharges().get(index);
 
             //Query the database to update the charge
-            endTimeCharge(activity, oldCharge);
+            endTimeCharge(oldCharge);
         }
 
         //Insert the data into the database
@@ -64,21 +73,19 @@ public class TimeChargeViewData {
 
     /**
      * Load all data from the database into the object model
-     * @param activity the activity that is currently displayed
      */
-    public void loadAllTimeCharges(ChargeActivity activity){
-        LoadTimeChargesTask loadTimeChargesTask = new LoadTimeChargesTask(activity);
+    public void loadAllTimeCharges(){
+        LoadTimeChargesTask loadTimeChargesTask = new LoadTimeChargesTask((ChargeActivity)activity);
         loadTimeChargesTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
     /**
      * Add the end date to the current active charge, and load the changes into the model object
-     * @param activity the activity that is currently displayed
      * @param timeCharge the old time charge that should be updated
      */
-    public void endTimeCharge(ChargeActivity activity, TimeCharge timeCharge){
+    public void endTimeCharge(TimeCharge timeCharge){
         timeCharge.setEnddate(LocalDate.now());
-        UpdateTimeChargeTask updateTimeChargeTask = new UpdateTimeChargeTask(activity, timeCharge);
+        UpdateTimeChargeTask updateTimeChargeTask = new UpdateTimeChargeTask((ChargeActivity)activity, timeCharge);
         updateTimeChargeTask.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
     }
 
@@ -110,6 +117,10 @@ public class TimeChargeViewData {
             return null;
         }
 
+        /**
+         * Update the data in the list view based on the query result
+         * @param empty null, query doesn't provide feedback
+         */
         @Override
         protected void onPostExecute(Void empty) {
             //Check if the activity is still displayed
@@ -200,8 +211,8 @@ public class TimeChargeViewData {
         }
 
         /**
-         *
-         * @param Void
+         * Update the list view based on the queries result
+         * @param Void null, the query doesn't provide feedback
          */
         @Override
         protected void onPostExecute(Void Void) {

@@ -25,20 +25,19 @@ public class LoginActivity extends SuperActivity {
 		etUsername = findViewById(R.id.etName);
 		etPassword = findViewById(R.id.etPassword);
 
-		btnLogin.setOnClickListener((view) -> {
-			UserViewData controller = new UserViewData();
-			controller.login(this);
-		});
+		UserViewData controller = new UserViewData(this);
 
-		btnRegistration.setOnClickListener((view) -> {
+		btnLogin.setOnClickListener(view -> controller.login());
+
+		btnRegistration.setOnClickListener(view -> {
 			Intent intent = new Intent(getApplicationContext(), RegistrationActivity.class);
 			startActivity(intent);
 		});
 
 	}
 
-	public void onResume() {
-		super.onResume();
+	public void onStart() {
+		super.onStart();
 
 		if(PreferencesManager.getInstance(this).userPrefExists()){
 			Role role = PreferencesManager.getInstance(this).getUserPref().getRole();
